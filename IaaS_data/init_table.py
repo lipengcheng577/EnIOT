@@ -58,7 +58,7 @@ class init_table(object):
             sql_value = "( "
             for column in columns:
                 sql_key += column[0]
-                sql_value += column[1]
+                sql_value += column[1].decode("utf-8")
                 if counter != len(columns):
                     sql_key += ', '
                     sql_value += ', '
@@ -73,5 +73,5 @@ class init_table(object):
 if __name__ == "__main__":
 
     table_opt = init_table()
-    #table_opt.init_table()
+    table_opt.init_table()
     table_opt.init_data_point_dict();
