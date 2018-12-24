@@ -9,10 +9,15 @@ from db_opt import *
 class init_table(object):
     def __init__(self):
         self._db = db_opt()
+        self._tables = []
+        self._table_dict = {}
+
+        self.read_table_info_ini()
+
 
     '''read table_info.ini'''
-    def init_table(self):
-        print 'init table program start ...'
+    def read_table_info_ini(self):
+        print 'read table info start ...'
 
         config = ConfigParser.ConfigParser()
 
@@ -22,11 +27,17 @@ class init_table(object):
             print "打开table_info.ini 失败！"
             return
 
-        tables = config.sections()
+        self._tables = config.sections()
 
-        for table in tables:
+        for table in self._tables:
             columns = config.items(table)
+            self._table_dict[table] = columns 
+     
 
+    def create_all_table(self):
+        for table in self._tables:
+            columns = self._table_dict[table]
+            self._table_dict[table] = columns 
             counter = 1
             sql = "create table " + table + " ( "
             for column in columns:
@@ -35,7 +46,12 @@ class init_table(object):
                     sql += ', '
                 counter += 1
             sql += " )"
+            self._db.excute(sql)
 
+
+    def drop_all_table(self):
+          for table in self._tables:
+            sql = "drop table " + table
             self._db.excute(sql)
 
     def init_data_point_dict(self):
@@ -65,13 +81,15 @@ class init_table(object):
                 counter += 1
             sql_key += " )"
             sql_value += " )"
-            print sql_key
-            print sql_value
+
             sql = "insert into data_point_dict " + sql_key + " values " + sql_value
             self._db.excute(sql)
 
 if __name__ == "__main__":
 
     table_opt = init_table()
-    table_opt.init_table()
-    table_opt.init_data_point_dict();
+
+    table_opt.drop_all_table()
+    table_opt.create_all_table()
+
+    table_opt.init_data_point_dict()

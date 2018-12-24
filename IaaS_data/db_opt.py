@@ -23,12 +23,17 @@ class db_opt(object):
     def excute(self, sql):
         print "SQL:-------------------------"
         print sql
-        print "-----------------------------"
+        
         cur = self._conn.cursor()
         try:
             cur.execute(sql)
             self._conn.commit()
         except:
+            self._conn.rollback() 
+            cur.close()
             print "Failed to excute the SQL"
+
+        print "-----------------------------"
+        print " "
         
 
