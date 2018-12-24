@@ -6,6 +6,8 @@ import psycopg2
 import time
 import datetime
 
+import logging
+
 
 class db_opt(object):
     """description of class"""
@@ -23,6 +25,7 @@ class db_opt(object):
     def excute(self, sql):
         print "SQL:-------------------------"
         print sql
+        logging.info(sql)
         
         cur = self._conn.cursor()
         try:
@@ -32,6 +35,7 @@ class db_opt(object):
             self._conn.rollback() 
             cur.close()
             print "Failed to excute the SQL"
+            logging.error("Failed:" + sql)
 
         print "-----------------------------"
         print " "

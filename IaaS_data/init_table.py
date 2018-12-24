@@ -4,6 +4,7 @@
 import ConfigParser
 
 from db_opt import *
+import logging
 
 
 class init_table(object):
@@ -87,9 +88,17 @@ class init_table(object):
 
 if __name__ == "__main__":
 
+    #定义日志输出格式
+    logging.basicConfig(level=logging.INFO,
+    format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+    datefmt = '%Y-%m-%d %H:%M:%S',
+    filename = "log.txt",
+    filemode = 'a+')
+
+
     table_opt = init_table()
 
-    table_opt.drop_all_table()
+#    table_opt.drop_all_table()
     table_opt.create_all_table()
 
     table_opt.init_data_point_dict()
