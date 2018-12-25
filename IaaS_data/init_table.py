@@ -88,7 +88,27 @@ class init_table(object):
             sql = "insert into " + table_name + " " + sql_key + " values " + sql_value
             self._db.excute(sql)
 
+    #依据dev_model中的data_attr, 以及dev_model中的point_table_name，生成空白配置文件
+    #免去人工输入，
+    def create_point_table_file(self, dev_model_id):
+        print "创建点表配置文件, 设备型号: %d" % dev_model_id 
+         #select id_father, point_table_name from dev_model where id=dev_model_id
+         #select data_attr from dev_type where id = id_father
+         #分割data_attr,生成如下文件
+         #id = 1 序号
+         #name = Ua
+         #point = 
+         #coef = 
+         #offset = 
 
+    #往实例化表里添加数据，读取响应配置文件 dev_model：point_table_name
+    def init_point_table(self):
+        #从dev_model里找出所有point_table_name，建表，然后 读取配置文件，插入数据
+        #select point_table_name from dev_model
+        print "init point table"
+
+
+    #此函数没啥用了
     def init_data_point_dict(self):
         print 'init_data_point_dict start ...'
         config = ConfigParser.ConfigParser()
