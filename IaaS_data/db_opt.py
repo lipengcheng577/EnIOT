@@ -39,5 +39,25 @@ class db_opt(object):
 
         print "-----------------------------"
         print " "
+
+
+    def select(self, sql):
+        print "SQL:-------------------------"
+        print sql
+        logging.info(sql)
+        
+        cur = self._conn.cursor()
+        try:
+            cur.execute(sql)
+            rows=cur.fetchall()
+            return rows
+        except:
+            self._conn.rollback() 
+            cur.close()
+            print "Failed to select the SQL"
+            logging.error("Failed:" + sql)
+            return []
+        print "-----------------------------"
+        print " "
         
 

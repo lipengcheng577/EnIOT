@@ -91,8 +91,13 @@ class init_table(object):
     #依据dev_model中的data_attr, 以及dev_model中的point_table_name，生成空白配置文件
     #免去人工输入，
     def create_point_table_file(self, dev_model_id):
-        print "创建点表配置文件, 设备型号: %d" % dev_model_id 
+         print u"创建点表配置文件, 设备型号:"
+         print dev_model_id
          #select id_father, point_table_name from dev_model where id=dev_model_id
+         sss = "select id_father, point_table_name from dev_model where id=1001001"
+         rows = self._db.select(sss)
+         for row in rows:
+                print 'id_father= %d , point_table_name=%s \n' % ( row[0], row[1])
          #select data_attr from dev_type where id = id_father
          #分割data_attr,生成如下文件
          #id = 1 序号
@@ -152,11 +157,14 @@ if __name__ == "__main__":
 
     table_opt = init_table()
 
-    table_opt.drop_all_table()
-    table_opt.create_all_table()
+    #table_opt.drop_all_table()
+    #table_opt.create_all_table()
 
-#    table_opt.init_data_point_dict()
-    table_opt.init_instance_table("data_point_dict")
-    table_opt.init_instance_table("dev_type")
-    table_opt.init_instance_table("dev_model")
-    table_opt.init_instance_table("dev_instance")
+    #table_opt.init_data_point_dict()
+    #table_opt.init_instance_table("data_point_dict")
+    #table_opt.init_instance_table("dev_type")
+    #table_opt.init_instance_table("dev_model")
+    #table_opt.init_instance_table("dev_instance")
+
+    table_opt.create_point_table_file(1001001)
+      
