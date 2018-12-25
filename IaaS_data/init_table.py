@@ -55,6 +55,40 @@ class init_table(object):
             sql = "drop table " + table
             self._db.excute(sql)
 
+    #往实例化表里添加数据，读取响应配置文件
+    def init_instance_table(self, table_name):
+        print 'init_instance_table: ' + table_name
+        config = ConfigParser.ConfigParser()
+
+        file_name = "./ini/" + table_name + ".ini"
+        try:
+            config.read(file_name)
+        except IOError:
+            logging.error("打开 %s 失败！", file_name)
+            return
+
+        rows = config.sections()
+
+        for row in rows:
+            columns = config.items(row)
+            #INSERT INTO table_name (列1, 列2,...) VALUES (值1, 值2,....)
+            counter = 1
+            sql_key = "( "
+            sql_value = "( "
+            for column in columns:
+                sql_key += column[0]
+                sql_value += column[1].decode("utf-8")
+                if counter != len(columns):
+                    sql_key += ', '
+                    sql_value += ', '
+                counter += 1
+            sql_key += " )"
+            sql_value += " )"
+
+            sql = "insert into " + table_name + " " + sql_key + " values " + sql_value
+            self._db.excute(sql)
+
+
     def init_data_point_dict(self):
         print 'init_data_point_dict start ...'
         config = ConfigParser.ConfigParser()
@@ -98,7 +132,11 @@ if __name__ == "__main__":
 
     table_opt = init_table()
 
-#    table_opt.drop_all_table()
+    table_opt.drop_all_table()
     table_opt.create_all_table()
 
-    table_opt.init_data_point_dict()
+#    table_opt.init_data_point_dict()
+    table_opt.init_instance_table("data_point_dict")
+    table_opt.init_instance_table("dev_type")
+    table_opt.init_instance_table("dev_model")
+    table_opt.init_instance_table("dev_instance")
