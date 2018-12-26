@@ -5,6 +5,7 @@ import ConfigParser
 
 from db_opt import *
 import logging
+import codecs
 
 
 class init_table(object):
@@ -93,13 +94,33 @@ class init_table(object):
     def create_point_table_file(self, dev_model_id):
         print u"创建点表配置文件, 设备型号: %d" % (dev_model_id)
         #select id_father, point_table_name from dev_model where id=dev_model_id
-        sss = "select id_father, point_table_name from dev_model where id=%d" % (dev_model_id)
-        rows = self._db.select(sss)
-        for row in rows:
+        sss = "select id_father, point_table_name, company, model from dev_model where id=%d" % (dev_model_id)
+        row1s = self._db.select(sss)
+        for row in row1s:
             print 'id_father= %d , point_table_name=%s \n' % ( row[0], row[1])
-
+        
+        id_father = int(row[0])
         #select data_attr from dev_type where id = id_father
+        row2s = self._db.select( "select name_zh, data_attr from dev_type where id = %d" % (id_father))
         #分割data_attr,生成如下文件
+        items = row2s[0][1].split(',')
+
+        file_name = "dev_point_table_%d.ini" %(dev_model_id)
+        file_full_path = "./ini/dev_point_table/%s" % (file_name)
+        f = codecs.open(file_full_path, 'w', 'utf-8') 
+        f.write( u'# 点表配置文件， 设备类型: %s %s:%s\n' % (row2s[0][0].decode("utf-8"), row1s[0][2].decode("utf-8"), row1s[0][3].decode("utf-8")) )
+        #f.write( "# %s %s:%s\n" % (row2s[0][1], row1s[0][2].decode("utf-8"), row1s[0][3].decode("utf-8")) )
+        index = 1
+        for item in items:
+            f.write( "[%d] \n" % index )
+            f.write( "id = %d \n" % index )
+            f.write( "name = %s \n" % item )
+            f.write( "point = \n" )
+            f.write( "coef = \n" )
+            f.write( "offset = \n\n" )
+            index += 1
+
+        f.close()
         #id = 1 序号
         #name = Ua
         #point = 
@@ -166,5 +187,5 @@ if __name__ == "__main__":
     #table_opt.init_instance_table("dev_model")
     #table_opt.init_instance_table("dev_instance")
 
-    table_opt.create_point_table_file(1001001)
+    #table_opt.create_point_table_file(1001001)
       
