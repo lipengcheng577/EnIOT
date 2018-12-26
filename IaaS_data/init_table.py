@@ -91,20 +91,20 @@ class init_table(object):
     #依据dev_model中的data_attr, 以及dev_model中的point_table_name，生成空白配置文件
     #免去人工输入，
     def create_point_table_file(self, dev_model_id):
-         print u"创建点表配置文件, 设备型号:"
-         print dev_model_id
-         #select id_father, point_table_name from dev_model where id=dev_model_id
-         sss = "select id_father, point_table_name from dev_model where id=1001001"
-         rows = self._db.select(sss)
-         for row in rows:
-                print 'id_father= %d , point_table_name=%s \n' % ( row[0], row[1])
-         #select data_attr from dev_type where id = id_father
-         #分割data_attr,生成如下文件
-         #id = 1 序号
-         #name = Ua
-         #point = 
-         #coef = 
-         #offset = 
+        print u"创建点表配置文件, 设备型号: %d" % (dev_model_id)
+        #select id_father, point_table_name from dev_model where id=dev_model_id
+        sss = "select id_father, point_table_name from dev_model where id=%d" % (dev_model_id)
+        rows = self._db.select(sss)
+        for row in rows:
+            print 'id_father= %d , point_table_name=%s \n' % ( row[0], row[1])
+
+        #select data_attr from dev_type where id = id_father
+        #分割data_attr,生成如下文件
+        #id = 1 序号
+        #name = Ua
+        #point = 
+        #coef = 
+        #offset = 
 
     #往实例化表里添加数据，读取响应配置文件 dev_model：point_table_name
     def init_point_table(self):
