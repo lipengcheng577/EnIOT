@@ -5,6 +5,7 @@ import ConfigParser
 
 from db_opt import *
 from init_table import *
+from rtdata import *
 import logging
 import codecs
 
@@ -34,3 +35,6 @@ if __name__ == "__main__":
     filemode = 'a+')
 
 #    table_init()
+
+    rtd = rtdata()
+    rtd.mupdate_new_frame()
