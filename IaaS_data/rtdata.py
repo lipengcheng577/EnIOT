@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import redis
+from db_opt import *
 
 #实时库入库、出库接口
 class rtdata(object):

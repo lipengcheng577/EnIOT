@@ -137,6 +137,8 @@ class init_table(object):
         row1s = self._db.select(sss)
         for row in row1s:
             #create talbe
+            sql = "drop table %s " % (row[0])
+            self._db.excute(sql)
             sql = "create table %s ( ID int, name text PRIMARY KEY, point int, coef float, offset_value float)" % (row[0])
             self._db.excute(sql)
             self.init_instance_table(row[0], "dev_point_table/")
@@ -174,28 +176,6 @@ class init_table(object):
             sql = "insert into data_point_dict " + sql_key + " values " + sql_value
             self._db.excute(sql)
 
-if __name__ == "__main__":
-
-    #定义日志输出格式
-    logging.basicConfig(level=logging.INFO,
-    format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
-    datefmt = '%Y-%m-%d %H:%M:%S',
-    filename = "log.txt",
-    filemode = 'a+')
-
-
-    table_opt = init_table()
-
-    table_opt.drop_all_table()
-    table_opt.create_all_table()
-
-    table_opt.init_instance_table("data_point_dict", "")
-    table_opt.init_instance_table("dev_type", "")
-    table_opt.init_instance_table("dev_model", "")
-    table_opt.init_instance_table("dev_instance", "")
-
-    table_opt.init_point_table()
-
-    #table_opt.create_point_table_file(1001001)
+    
     
       

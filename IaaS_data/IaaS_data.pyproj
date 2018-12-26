@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>3ae32e99-05fc-4c4d-9086-31d341c2d85a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>init_table.py</StartupFile>
+    <StartupFile>iaas_data.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,6 +24,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="db_opt.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="iaas_data.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="init_table.py" />
