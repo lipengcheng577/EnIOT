@@ -52,16 +52,17 @@ class init_table(object):
 
 
     def drop_all_table(self):
-          for table in self._tables:
+        for table in self._tables:
             sql = "drop table " + table
             self._db.excute(sql)
 
+
     #往实例化表里添加数据，读取响应配置文件
-    def init_instance_table(self, table_name):
+    def init_instance_table(self, table_name, file_path):
         print 'init_instance_table: ' + table_name
         config = ConfigParser.ConfigParser()
 
-        file_name = "./ini/" + table_name + ".ini"
+        file_name = "./ini/" + file_path + table_name + ".ini"
         try:
             config.read(file_name)
         except IOError:
@@ -117,7 +118,7 @@ class init_table(object):
             f.write( "name = %s \n" % item )
             f.write( "point = \n" )
             f.write( "coef = \n" )
-            f.write( "offset = \n\n" )
+            f.write( "offset_value = \n\n" )
             index += 1
 
         f.close()
@@ -125,13 +126,20 @@ class init_table(object):
         #name = Ua
         #point = 
         #coef = 
-        #offset = 
+        #offset_value = 
 
     #往实例化表里添加数据，读取响应配置文件 dev_model：point_table_name
     def init_point_table(self):
         #从dev_model里找出所有point_table_name，建表，然后 读取配置文件，插入数据
         #select point_table_name from dev_model
         print "init point table"
+        sss = "select point_table_name from dev_model"
+        row1s = self._db.select(sss)
+        for row in row1s:
+            #create talbe
+            sql = "create table %s ( ID int, name text PRIMARY KEY, point int, coef float, offset_value float)" % (row[0])
+            self._db.excute(sql)
+            self.init_instance_table(row[0], "dev_point_table/")
 
 
     #此函数没啥用了
@@ -178,14 +186,16 @@ if __name__ == "__main__":
 
     table_opt = init_table()
 
-    #table_opt.drop_all_table()
-    #table_opt.create_all_table()
+    table_opt.drop_all_table()
+    table_opt.create_all_table()
 
-    #table_opt.init_data_point_dict()
-    #table_opt.init_instance_table("data_point_dict")
-    #table_opt.init_instance_table("dev_type")
-    #table_opt.init_instance_table("dev_model")
-    #table_opt.init_instance_table("dev_instance")
+    table_opt.init_instance_table("data_point_dict", "")
+    table_opt.init_instance_table("dev_type", "")
+    table_opt.init_instance_table("dev_model", "")
+    table_opt.init_instance_table("dev_instance", "")
+
+    table_opt.init_point_table()
 
     #table_opt.create_point_table_file(1001001)
+    
       
