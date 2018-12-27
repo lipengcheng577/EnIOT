@@ -13,17 +13,7 @@ class rtdata(object):
         # 属性集合
         
 
-    def mupdate_new_frame(self):
-        attr_dict = {
-            "name": "天合",
-            "alias": "trina",
-            "sex": "male",
-            "height": 175,
-            "postal code": 100086,
-            "Tel": "138",
-        }
-        # 批量添加属性
-        
-        self.rds.hmset("rtdata_test", attr_dict)
+    def mupdate_new_frame(self, dev_id, data):  
+        self.rds.hmset(dev_id, data)
 
 

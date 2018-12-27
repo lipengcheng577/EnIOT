@@ -31,7 +31,6 @@ class rtdata_channel:
 
 
 if __name__ == "__main__":
-
     print '!!!!!!!!!!!!!!!!!!!!\n   FEP SIMULATOR\n!!!!!!!!!!!!!!!!!!!!\n'
     #定义日志输出格式
     logging.basicConfig(level=logging.INFO,
@@ -77,7 +76,6 @@ if __name__ == "__main__":
     #while True:
     #    rt_ch.public(json_ret)
     #    sleep(15)
-
 
 
     #rt_ch = rtdata_channel()

@@ -71,6 +71,20 @@ if __name__ == "__main__":
         rt_sub = rt_ch.subscribe()
         msg= rt_sub.parse_response()
         print msg
+        logging.info(msg)
+        msg_string = json.dumps(msg)
+        rt_data = json.loads(msg_string)
+        data_dict = eval(rt_data[2])
+        if type(data_dict) == type({}):
+            if data_dict.has_key('id'):  
+                id = data_dict['id']
+                print "dev id = %d" % id
+            else:
+                print "Wrong data, there is no ID"
+
+        
+
+
 
         #rtd = rtdata()
         #rtd.mupdate_new_frame()
