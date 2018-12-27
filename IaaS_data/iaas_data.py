@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-sys.path.append("D:\\platform\\code\\EnIOT\\iaas")
+sys.path.append("..")
 
 import ConfigParser
 
@@ -11,7 +11,7 @@ import ConfigParser
 import db_opt
 from init_table import *
 from rtdata import *
-from dev_info import *
+from iaas.dev_info import *
 import logging
 import codecs
 import json
@@ -36,7 +36,7 @@ class rtdata_channel:
     def __init__(self):
         self.__conn = redis.Redis(host='127.0.0.1')
         self.chan_sub = 'rtdata_channel'
-        self.chan_pub = 'fm104.5'
+        self.chan_pub = 'rtdata_channel'
 
     def public(self, msg):
         self.__conn.publish(self.chan_pub, msg)
@@ -65,13 +65,14 @@ if __name__ == "__main__":
     json_s = dev_info_obj.get_dev_meas_info(10001)
     print json_s
 
-    #rt_ch = rtdata_channel()
-    #rt_sub = rt_ch.subscribe()
-    #while true:
-    #    msg= rt_sub.parse_response()
-    #    print msg
+    rt_ch = rtdata_channel()
+    
+    while True:
+        rt_sub = rt_ch.subscribe()
+        msg= rt_sub.parse_response()
+        print msg
 
-    #    rtd = rtdata()
-    #    rtd.mupdate_new_frame()
+        #rtd = rtdata()
+        #rtd.mupdate_new_frame()
 
     
