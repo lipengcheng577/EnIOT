@@ -2,18 +2,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>3ae32e99-05fc-4c4d-9086-31d341c2d85a</ProjectGuid>
+    <ProjectGuid>0f9a8a6b-40ba-496f-9b02-1502e840d18d</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>iaas_data.py</StartupFile>
-    <SearchPath>..\iaas</SearchPath>
+    <StartupFile>fep_simu.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>IaaS_data</Name>
-    <RootNamespace>IaaS_data</RootNamespace>
-    <IsWindowsApplication>False</IsWindowsApplication>
-    <InterpreterId>Global|PythonCore|2.7</InterpreterId>
-    <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <Name>fep_simu</Name>
+    <RootNamespace>fep_simu</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,19 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="hisdata.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="iaas_data.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="init_table.py" />
-    <Compile Include="rtdata.py">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <InterpreterReference Include="Global|PythonCore|2.7" />
+    <Compile Include="fep_simu.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

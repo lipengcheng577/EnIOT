@@ -1,4 +1,7 @@
 redis-64.3.0.503/*
 *.suo
-*.pyc
+IaaS_data\*.pyc
 log.txt
+.vs/EnIOT/v15/.suo
+*.pyc
+.vs/EnIOT/v15/.suo

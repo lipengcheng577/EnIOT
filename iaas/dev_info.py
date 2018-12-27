@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-from db_opt import *
+import db_opt
 import logging
 import codecs
 
@@ -12,7 +11,7 @@ import json
 
 class dev_info(object):
     def __init__(self):
-        self._db = db_opt()
+        self._db = db_opt.db_opt()
 
     #从设备ID获取设备量点表，返回json格式
     def get_dev_meas_info(self, dev_id):
@@ -25,7 +24,7 @@ class dev_info(object):
         rows = self._db.select(sql)
         dev_table_name = rows[0][0]
 
-        sql = "select name, point, coef, offset_value from %s" % (dev_table_name)
+        sql = "select point, name, coef, offset_value from %s" % (dev_table_name)
         rows = self._db.select(sql)
         meas_dict = {}
         for row in rows:
