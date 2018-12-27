@@ -26,6 +26,12 @@
     <Compile Include="db_opt.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="dev_info.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="hisdata.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="iaas_data.py">
       <SubType>Code</SubType>
     </Compile>

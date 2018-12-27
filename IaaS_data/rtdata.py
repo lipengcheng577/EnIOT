@@ -15,7 +15,7 @@ class rtdata(object):
 
     def mupdate_new_frame(self):
         attr_dict = {
-            "name": "redis",
+            "name": "天合",
             "alias": "trina",
             "sex": "male",
             "height": 175,
