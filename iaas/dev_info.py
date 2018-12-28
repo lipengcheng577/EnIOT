@@ -13,6 +13,33 @@ class dev_info(object):
     def __init__(self):
         self._db = db_opt.db_opt()
 
+
+    def get_dev_meas_names(self, dev_id):
+        '''获取测点名称列表'''
+        sql = "select dev_model from dev_instance where id=%d" % (dev_id)
+        rows = self._db.select(sql)
+        dev_model_id = int( rows[0][0])
+        print 'dev_model= %d \n' % (dev_model_id)
+
+        sql = "select point_table_name from dev_model where id=%d" % (dev_model_id)
+        rows = self._db.select(sql)
+        point_table_name = rows[0][0]
+
+        sql = "select name from %s" % (point_table_name)
+        rows = self._db.select(sql)
+        meas_list = []
+        for row in rows:
+            meas_list.append(row[0])
+            
+        return meas_list
+
+
+    def get_meas_type(self, name):
+        sql = "select data_type from data_point_dict where name= '%s' " % (name)
+        rows = self._db.select(sql)
+        return rows[0][0]
+        
+
     #从设备ID获取设备量点表，返回json格式
     def get_dev_meas_info(self, dev_id):
         sql = "select dev_model from dev_instance where id=%d" % (dev_id)
@@ -22,9 +49,9 @@ class dev_info(object):
 
         sql = "select point_table_name from dev_model where id=%d" % (dev_model_id)
         rows = self._db.select(sql)
-        dev_table_name = rows[0][0]
+        point_table_name = rows[0][0]
 
-        sql = "select point, name, coef, offset_value from %s" % (dev_table_name)
+        sql = "select point, name, coef, offset_value from %s" % (point_table_name)
         rows = self._db.select(sql)
         meas_dict = {}
         for row in rows:

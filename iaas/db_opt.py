@@ -31,14 +31,23 @@ class db_opt(object):
         try:
             cur.execute(sql)
             self._conn.commit()
+            return True
         except:
             self._conn.rollback() 
             cur.close()
             print "Failed to excute the SQL"
             logging.error("Failed:" + sql)
-
+            return False
         print "-----------------------------"
         print " "
+
+
+    def if_table_exit(self, table_name):
+        cur = self._conn.cursor()
+        sql = "SELECT to_regclass('%s') is not null" % table_name
+        cur.execute(sql)
+        rows=cur.fetchall()
+        return rows[0][0]
 
 
     def select(self, sql):

@@ -143,39 +143,6 @@ class init_table(object):
             self._db.excute(sql)
             self.init_instance_table(row[0], "dev_point_table/")
 
-
-    #此函数没啥用了
-    def init_data_point_dict(self):
-        print 'init_data_point_dict start ...'
-        config = ConfigParser.ConfigParser()
-
-        try:
-            config.read("./ini/data_point_dict.ini")
-        except IOError:
-            print "打开data_point_dict.ini 失败！"
-            return
-
-        rows = config.sections()
-
-        for row in rows:
-            columns = config.items(row)
-            #INSERT INTO table_name (列1, 列2,...) VALUES (值1, 值2,....)
-            counter = 1
-            sql_key = "( "
-            sql_value = "( "
-            for column in columns:
-                sql_key += column[0]
-                sql_value += column[1].decode("utf-8")
-                if counter != len(columns):
-                    sql_key += ', '
-                    sql_value += ', '
-                counter += 1
-            sql_key += " )"
-            sql_value += " )"
-
-            sql = "insert into data_point_dict " + sql_key + " values " + sql_value
-            self._db.excute(sql)
-
     
     
       

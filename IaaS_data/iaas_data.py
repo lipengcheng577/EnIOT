@@ -5,16 +5,18 @@ import sys
 sys.path.append("..")
 
 import ConfigParser
-
+import logging
+import codecs
+import json
 #from iaas.db_opt import *
 
 import db_opt
 from init_table import *
 from rtdata import *
-from iaas.dev_info import *
-import logging
-import codecs
-import json
+from dev_info import *
+from hisdata import *
+
+
 
 def table_init():
     table_opt = init_table()
@@ -49,8 +51,6 @@ class rtdata_channel:
         return pub
 
 
-
-
 if __name__ == "__main__":
 
     #定义日志输出格式
@@ -59,6 +59,9 @@ if __name__ == "__main__":
     datefmt = '%Y-%m-%d %H:%M:%S',
     filename = "log.txt",
     filemode = 'a+')
+
+    rtdb = rtdata()
+    hisdb = hisdata()
 
 #    table_init()
     dev_info_obj = dev_info()
@@ -75,18 +78,13 @@ if __name__ == "__main__":
         msg_string = json.dumps(msg)
         rt_data = json.loads(msg_string)
         data_dict = eval(rt_data[2])
-        if type(data_dict) == type({}):
-            if data_dict.has_key('id'):  
-                id = data_dict['id']
-                print "dev id = %d" % id
-            else:
-                print "Wrong data, there is no ID"
+        if data_dict.has_key('id'):  
+            id = data_dict['id']
+            print "dev id = %d" % id
+            rtdb.mupdate_new_frame(int(id), data_dict)
+            hisdb.insert_record(int(id), data_dict)
+        else:
+            print "Wrong data, there is no ID"
 
-        
-
-
-
-        #rtd = rtdata()
-        #rtd.mupdate_new_frame()
 
     
