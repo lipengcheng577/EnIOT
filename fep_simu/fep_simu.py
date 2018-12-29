@@ -53,7 +53,7 @@ if __name__ == "__main__":
     dev_info_obj = dev_info()
 
     dev_ids = []
-    for i in range(10001,10020):
+    for i in range(10001,10023):
         dev_ids.append(i)
     #dev_ids = [10001, 10002, 10003, 10004]
 

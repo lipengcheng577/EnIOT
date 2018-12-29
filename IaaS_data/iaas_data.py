@@ -71,7 +71,7 @@ if __name__ == "__main__":
     rtdb = rtdata()
     hisdb = hisdata()
 
-#    table_init()
+    table_init()
 
     rt_ch = rtdata_channel()
     rt_sub = rt_ch.subscribe()
