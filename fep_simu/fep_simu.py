@@ -8,9 +8,11 @@ import logging
 import codecs
 import json
 import redis
-from iaas.dev_info import *
+import iaas.dev_info
 import time
-
+import random
+from single_dev import *
+from iaas.dev_info import *
 
 class rtdata_channel:
 
@@ -32,6 +34,14 @@ class rtdata_channel:
 
 if __name__ == "__main__":
     print '!!!!!!!!!!!!!!!!!!!!\n   FEP SIMULATOR\n!!!!!!!!!!!!!!!!!!!!\n'
+    # Print out the menu:
+    print "Input: " 
+    print "stop --exit the program"
+
+    cmd = raw_input( "> " )
+    if cmd == 'start':
+        print u"启动程序"
+
     #定义日志输出格式
     logging.basicConfig(level=logging.INFO,
     format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
@@ -39,53 +49,33 @@ if __name__ == "__main__":
     filename = "log.txt",
     filemode = 'a+')
 
-#    table_init()
-    dev_id = 10001
-    dev_info_obj = dev_info()
-    json_s = dev_info_obj.get_dev_meas_info(dev_id)
-    print json_s
-    logging.info(json_s)
-
-    points = json.loads(json_s)
-
-    ret = {}
-    ret['id'] = dev_id
-    soc = int(time.time())
-    ret['SOC'] = soc
-    timestruct = time.localtime(soc)
-    timestring = time.strftime("'%Y-%m-%d %H:%M:%S'", timestruct)
-    ret['date_time'] = timestring
-    for point_no in points:
-        point_info = points[point_no]
-        point_name = point_info[0]
-        point_coef = float(point_info[1])
-        point_offset = float(point_info[2])
-        print point_info[0]
-
-        value = float(point_no) * point_coef + point_offset
-        ret[point_name] = value
-
-    json_ret = json.dumps(ret, sort_keys=True)
-    print json_ret
-
     rt_ch = rtdata_channel()
-    try:
-        rt_ch.public(json_ret)
-    except:
-        logging.error("Failed send meas data!")
-    #while True:
-    #    rt_ch.public(json_ret)
-    #    sleep(15)
+    dev_info_obj = dev_info()
 
+    dev_objs = []
+    dev_ids = [10001, 10002, 10003]
+    for dev_id in dev_ids:
+        dev_obj = single_dev(dev_id, dev_info_obj, rt_ch)
+        time.sleep(0.5)
+        dev_obj.start()
+        dev_objs.append(dev_obj)
 
-    #rt_ch = rtdata_channel()
-    #rt_sub = rt_ch.subscribe()
-    #while true:
-    #    msg= rt_sub.parse_response()
-    #    print msg
+    count = 1
+    while True:
+        print 'Fep is running, %d' % count
+        count += 1
 
-    #    rtd = rtdata()
-    #    rtd.mupdate_new_frame()
-
+        cmd = raw_input( "> " ) 
+        if cmd == 'stop':
+            print u"即将结束程序..."
+            for dev_obj in dev_objs:
+                dev_obj.stop()
+            time.sleep(15)
+            break
+        else:
+            print u"无效命令"
+        time.sleep(1)
     
 
+
+   

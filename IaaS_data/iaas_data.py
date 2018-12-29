@@ -15,7 +15,7 @@ from init_table import *
 from rtdata import *
 from dev_info import *
 from hisdata import *
-
+logging.getLogger().setLevel(logging.INFO)
 
 
 def table_init():
@@ -52,7 +52,7 @@ class rtdata_channel:
 
 
 if __name__ == "__main__":
-
+    print '*********************\n   IAAS_DATA\n *********************\n'
     #定义日志输出格式
     logging.basicConfig(level=logging.INFO,
     format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
@@ -60,27 +60,31 @@ if __name__ == "__main__":
     filename = "log.txt",
     filemode = 'a+')
 
+    #console = logging.StreamHandler()
+    #console.setLevel(logging.INFO)
+    #formatter = logging.Formatter('%(name)s : %(levelname)s : %(message)s')
+    #console.setFormatter(formatter)
+    #logging.getLogger('').addHandler(console)
+
+    #logging.info("++++++++++++++++++++++++++++")
+
     rtdb = rtdata()
     hisdb = hisdata()
 
 #    table_init()
-    dev_info_obj = dev_info()
-    json_s = dev_info_obj.get_dev_meas_info(10001)
-    print json_s
 
     rt_ch = rtdata_channel()
-    
     while True:
         rt_sub = rt_ch.subscribe()
         msg= rt_sub.parse_response()
-        print msg
         logging.info(msg)
         msg_string = json.dumps(msg)
         rt_data = json.loads(msg_string)
         data_dict = eval(rt_data[2])
         if data_dict.has_key('id'):  
             id = data_dict['id']
-            print "dev id = %d" % id
+            soc = data_dict['SOC']
+            print "recv data, dev id = %d, soc=%d" % (id, soc)
             rtdb.mupdate_new_frame(int(id), data_dict)
             hisdb.insert_record(int(id), data_dict)
         else:

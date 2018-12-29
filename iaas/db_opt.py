@@ -7,7 +7,7 @@ import time
 import datetime
 
 import logging
-
+logging.getLogger().setLevel(logging.INFO)
 
 class db_opt(object):
     """description of class"""
@@ -23,8 +23,6 @@ class db_opt(object):
         self._conn.close()
 
     def excute(self, sql):
-        print "SQL:-------------------------"
-        print sql
         logging.info(sql)
         
         cur = self._conn.cursor()
@@ -35,11 +33,8 @@ class db_opt(object):
         except:
             self._conn.rollback() 
             cur.close()
-            print "Failed to excute the SQL"
             logging.error("Failed:" + sql)
             return False
-        print "-----------------------------"
-        print " "
 
 
     def if_table_exit(self, table_name):
@@ -51,8 +46,6 @@ class db_opt(object):
 
 
     def select(self, sql):
-        print "SQL:-------------------------"
-        print sql
         logging.info(sql)
         
         cur = self._conn.cursor()
@@ -63,10 +56,6 @@ class db_opt(object):
         except:
             self._conn.rollback() 
             cur.close()
-            print "Failed to select the SQL"
             logging.error("Failed:" + sql)
             return []
-        print "-----------------------------"
-        print " "
-        
 
