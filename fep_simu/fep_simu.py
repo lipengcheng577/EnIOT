@@ -52,18 +52,21 @@ if __name__ == "__main__":
     rt_ch = rtdata_channel()
     dev_info_obj = dev_info()
 
+    dev_ids = []
+    for i in range(10001,10020):
+        dev_ids.append(i)
+    #dev_ids = [10001, 10002, 10003, 10004]
+
     dev_objs = []
-    dev_ids = [10001, 10002, 10003]
     for dev_id in dev_ids:
         dev_obj = single_dev(dev_id, dev_info_obj, rt_ch)
         #time.sleep(0.5)
         dev_obj.start()
         dev_objs.append(dev_obj)
 
-    count = 1
+
     while True:
-        print 'Fep is running, %d' % count
-        count += 1
+        print 'Fep is running...'
 
         cmd = raw_input( "> " ) 
         if cmd == 'stop':
