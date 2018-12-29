@@ -74,10 +74,12 @@ if __name__ == "__main__":
 #    table_init()
 
     rt_ch = rtdata_channel()
+    rt_sub = rt_ch.subscribe()
     while True:
-        rt_sub = rt_ch.subscribe()
+       
         msg= rt_sub.parse_response()
         logging.info(msg)
+
         msg_string = json.dumps(msg)
         rt_data = json.loads(msg_string)
         data_dict = eval(rt_data[2])

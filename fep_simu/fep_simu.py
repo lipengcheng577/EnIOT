@@ -56,7 +56,7 @@ if __name__ == "__main__":
     dev_ids = [10001, 10002, 10003]
     for dev_id in dev_ids:
         dev_obj = single_dev(dev_id, dev_info_obj, rt_ch)
-        time.sleep(0.5)
+        #time.sleep(0.5)
         dev_obj.start()
         dev_objs.append(dev_obj)
 
