@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>92682041-5006-405a-b7ae-bd099dd7e6eb</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectTypeGuids>{789894c7-04a9-4a11-a6b5-3f4435165112};{1b580a1a-fdb3-4b32-83e1-6407eb2722e6};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <StartupFile>runserver.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <LaunchProvider>Web launcher</LaunchProvider>
+    <WebBrowserUrl>http://localhost</WebBrowserUrl>
+    <OutputPath>.</OutputPath>
+    <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
+    <Name>data_monitor</Name>
+    <RootNamespace>data_monitor</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="runserver.py" />
+    <Compile Include="data_monitor\__init__.py" />
+    <Compile Include="data_monitor\views.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data_monitor\" />
+    <Folder Include="data_monitor\static\" />
+    <Folder Include="data_monitor\static\content\" />
+    <Folder Include="data_monitor\static\fonts\" />
+    <Folder Include="data_monitor\static\scripts\" />
+    <Folder Include="data_monitor\templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data_monitor\templates\curve.html" />
+    <Content Include="requirements.txt" />
+    <Content Include="data_monitor\static\content\bootstrap.css" />
+    <Content Include="data_monitor\static\content\bootstrap.min.css" />
+    <Content Include="data_monitor\static\content\site.css" />
+    <Content Include="data_monitor\static\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="data_monitor\static\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="data_monitor\static\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="data_monitor\static\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="data_monitor\static\scripts\bootstrap.js" />
+    <Content Include="data_monitor\static\scripts\bootstrap.min.js" />
+    <Content Include="data_monitor\static\scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="data_monitor\static\scripts\jquery-1.10.2.js" />
+    <Content Include="data_monitor\static\scripts\jquery-1.10.2.min.js" />
+    <Content Include="data_monitor\static\scripts\jquery-1.10.2.min.map" />
+    <Content Include="data_monitor\static\scripts\jquery.validate-vsdoc.js" />
+    <Content Include="data_monitor\static\scripts\jquery.validate.js" />
+    <Content Include="data_monitor\static\scripts\jquery.validate.min.js" />
+    <Content Include="data_monitor\static\scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="data_monitor\static\scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="data_monitor\static\scripts\modernizr-2.6.2.js" />
+    <Content Include="data_monitor\static\scripts\respond.js" />
+    <Content Include="data_monitor\static\scripts\respond.min.js" />
+    <Content Include="data_monitor\static\scripts\_references.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Web.targets" />
+  <!-- Specify pre- and post-build commands in the BeforeBuild and 
+       AfterBuild targets below. -->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <AutoAssignPort>True</AutoAssignPort>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		iaas\dev_info.py = iaas\dev_info.py
 	EndProjectSection
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "data_monitor", "data_monitor\data_monitor.pyproj", "{92682041-5006-405A-B7AE-BD099DD7E6EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{3AE32E99-05FC-4C4D-9086-31D341C2D85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F9A8A6B-40BA-496F-9B02-1502E840D18D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F9A8A6B-40BA-496F-9B02-1502E840D18D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92682041-5006-405A-B7AE-BD099DD7E6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92682041-5006-405A-B7AE-BD099DD7E6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92682041-5006-405A-B7AE-BD099DD7E6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92682041-5006-405A-B7AE-BD099DD7E6EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

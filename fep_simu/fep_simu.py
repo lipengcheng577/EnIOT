@@ -38,9 +38,9 @@ if __name__ == "__main__":
     print "Input: " 
     print "stop --exit the program"
 
-    cmd = raw_input( "> " )
-    if cmd == 'start':
-        print u"启动程序"
+    #cmd = raw_input( "> " )
+    #if cmd == 'start':
+    #    print u'启动程序'
 
     #定义日志输出格式
     logging.basicConfig(level=logging.INFO,
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
         cmd = raw_input( "> " ) 
         if cmd == 'stop':
-            print u"即将结束程序..."
+            print u"End Fep simu..."
             for dev_obj in dev_objs:
                 dev_obj.stop()
             time.sleep(15)

@@ -17,6 +17,7 @@ class hisdata(object):
         ret = self._db.if_table_exit( "dev_info" )
         print ret
 
+
     def create_hisdata_table(self, dev_id):
         '''按照设备ID创建历史数据表'''
         meas_list = self._dev_info.get_dev_meas_names(dev_id)
@@ -51,6 +52,16 @@ class hisdata(object):
         if self._db.excute(sql) is False:
             self.create_hisdata_table(dev_id)
             self._db.excute(sql)
+
+
+    '''查询历史数据'''
+    def query_data(self, start_time, end_time=0):
+        if end_time == 0:
+            return 1
+        else:
+            return []
+
+
 
 
 
