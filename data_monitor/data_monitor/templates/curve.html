@@ -1,13 +1,13 @@
 ﻿<!DOCTYPE HTML>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Highcharts Example</title>
-        <script type="text/javascript" src="http://cdn.hcharts.cn/highstock/highstock.js"></script>
-        <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript">
-
-            var data={{data}};    
+<h2>{{ devs }}.</h2>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>实时数据展示</title>
+    <script type="text/javascript" src="../static/scripts/highstock.js"></script>
+    <script type="text/javascript" src="../static/scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+            var data={{data}};
   	        //创建图表
   	        var chart;
   	        $(document).ready(function() {
@@ -17,18 +17,23 @@
     	        }
    		        })
 
-
 	   	        chart = new Highcharts.StockChart( {
 	    	        chart : {
 		     	        renderTo : 'container',
 		     	        events : {
 		      		        load : st// 定时器
-		     	        }
+		     	        },
+                        // 图表宽度
+                        //width: 600,
+                        // 图表高度
+                        hight: 200,
+                        // 默认图表类型
+                        type: 'line'
 	    	        },
-	    	        rangeSelector: {
-	      		        nputEnabled: $('#container').width() > 480,
-	        		        selected: 1
-	    	        },
+	    	        //rangeSelector: {
+	      		    //    inputEnabled: $('#container').width() > 480,
+	        		//        selected: 1
+	    	        //},
 	    	        exporting:{
 		     	        enabled:true
 		    	        },
@@ -43,7 +48,7 @@
 		        });
   	        });
 
-	        //2秒钟刷新一次数据
+	        //5秒钟刷新一次数据
 	        function st() {
 		        setInterval("getData()", 5000);
 	        }
@@ -60,10 +65,111 @@
 	            });
   	        }
 
-        </script>
-    </head>
+    </script>
+
+    <script type="text/javascript"> 
+        
+       // var ddd= {{ devs }};
+        function showCheckbox() 
+        { 
+            //var devs={{ devs }};
+            var devs = ["dev1", "dev2", "dev3"];
+            genCheck(devs);
+        } 
+
+        window.onload = function () {
+            showCheckbox(); 
+        }
+//       window.onload = function () {
+//           var devs = ["dev1", "dev2","dev3"];
+//           genCheck(devs);
+//        }
+
+        function genCheck(devs) {
+            var content = "content";
+            var checkText = "checkbox";
+            var link = "link";
+            var size;
+
+            $("#show").html("");
+
+
+            for (var i = 0; i < devs.length; i++) {
+                genShowContent("show", checkText + i, i, devs[i], content + i);
+            }
+
+            for (var i = 0; i < devs.length; i++) {      
+                var flag = isAllCheck(link + i);
+                var box = document.getElementById(checkText + i);
+                if (flag) {
+                    box.checked = true;
+                } else {
+                    box.checked = false;
+                }
+                $("input[name=" + link + i + "]").each(function () {
+                    $(this).unbind();
+                    $(this).change(function () {
+                        var flag = isAllCheck($(this).attr("name"));
+                        var box = document.getElementById(checkText + $(this).attr("parentIndex"));
+                        if (flag) {
+                            box.checked = true;
+                        } else {
+                            box.checked = false;
+                        }
+                    });
+                });
+            }
+
+            for (var i = 0; i < devs.length; i++) {
+                $("#" + checkText + i).unbind();
+                $("#" + checkText + i).change(function () {
+                    var temp = link + $(this).attr("index");
+                    var p = document.getElementById(checkText + $(this).attr("index"));
+                    var box = document.getElementsByName(temp);
+                    for (var j = 0; j < box.length; j++) {
+                        if (p.checked) {
+                            box[j].checked = true;
+                        } else {
+                            box[j].checked = false;
+                        }
+                    }
+                });
+            }
+        }
+
+
+        function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
+            if (!isCheck) {
+                var checkbox = "<div class='la'><input type='checkbox' parentIndex=" + parentIndex + " name=".concat(name).concat(" value=").concat(value).concat(" alt=").concat(showText).concat(" /><span>").concat(showText).concat("</span></div>");
+                $("#" + id).append(checkbox);
+            } else {
+                var checkbox = "<div class='la'><input type='checkbox' parentIndex=" + parentIndex + " name=".concat(name).concat(" checked='checked' value=").concat(value).concat(" alt=").concat(showText).concat(" /><span>").concat(showText).concat("</span></div>");
+                $("#" + id).append(checkbox);
+            }
+        }
+
+
+        function genShowContent(id, checkboxId, index, showText, idName) {
+            var showContent = "<div class='msg'><span class='bigfont'>".concat(showText).concat("： </span><input type='checkbox' index=").concat(index).concat(" id='").concat(checkboxId).concat("'/><span>全选</span><div class='content' id='").concat(idName).concat("' ></div></div>");
+            $("#" + id).append(showContent);
+        }
+
+
+        function isAllCheck(name) {
+            var box = document.getElementsByName(name);
+            for (var j = 0; j < box.length; j++) {
+                if (!box[j].checked) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+
+</head>
 	
-	<body>
-		<div id="container"></div>
-	</body>
+<body>
+    <div id="container"></div>
+    <div class="show" id="show"></div>
+</body>
 </html>

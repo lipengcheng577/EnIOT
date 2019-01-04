@@ -40,8 +40,8 @@
     <Folder Include="data_monitor\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data_monitor\static\scripts\highstock.js" />
     <Content Include="data_monitor\templates\curve.html" />
-    <Content Include="requirements.txt" />
     <Content Include="data_monitor\static\content\bootstrap.css" />
     <Content Include="data_monitor\static\content\bootstrap.min.css" />
     <Content Include="data_monitor\static\content\site.css" />

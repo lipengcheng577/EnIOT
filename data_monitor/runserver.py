@@ -2,7 +2,6 @@
 This script runs the data_monitor application using a development server.
 """
 
-from os import environ
 from data_monitor import app
 
 if __name__ == '__main__':
