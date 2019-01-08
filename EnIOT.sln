@@ -17,6 +17,10 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "data_monitor", "data_monito
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "mqtt_client", "mqtt_client\mqtt_client.pyproj", "{EA5D84A1-44D5-4590-A0F0-CDD07BCA4360}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "fep_mqtt", "fep_mqtt\fep_mqtt.pyproj", "{09949367-8D4E-4C64-8330-0DDB8D8AEF63}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "meter_mqtt_simu", "meter_mqtt_simu\meter_mqtt_simu.pyproj", "{DB4028B2-2D6E-40AA-BA5E-E470F7DD4925}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,10 @@ Global
 		{92682041-5006-405A-B7AE-BD099DD7E6EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EA5D84A1-44D5-4590-A0F0-CDD07BCA4360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA5D84A1-44D5-4590-A0F0-CDD07BCA4360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09949367-8D4E-4C64-8330-0DDB8D8AEF63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09949367-8D4E-4C64-8330-0DDB8D8AEF63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB4028B2-2D6E-40AA-BA5E-E470F7DD4925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB4028B2-2D6E-40AA-BA5E-E470F7DD4925}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

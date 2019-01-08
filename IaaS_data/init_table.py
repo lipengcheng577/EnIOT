@@ -90,6 +90,7 @@ class init_table(object):
             sql = "insert into " + table_name + " " + sql_key + " values " + sql_value
             self._db.excute(sql)
 
+
     #依据dev_model中的data_attr, 以及dev_model中的point_table_name，生成空白配置文件
     #免去人工输入，
     def create_point_table_file(self, dev_model_id):

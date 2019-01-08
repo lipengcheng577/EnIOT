@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# File Name:mqtt_chat_client.py
-# Python Version:3.5.1
+# File Name:meter_mqtt_simu.py
+# 模拟采用mqtt通信的电表，与fep_mqtt进行通信
+# Python Version:2.7
 
 import paho.mqtt.client as mqtt
 import json
+
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -41,3 +43,5 @@ if __name__ == '__main__':
         str = raw_input()
         if str:
             client.publish("chat", json.dumps({"user": user, "say": str}))
+
+
