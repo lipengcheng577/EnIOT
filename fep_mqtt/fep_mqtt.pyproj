@@ -22,6 +22,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="fep_mqtt.py" />
+    <Compile Include="my_mqtt.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="single_dev.py">
       <SubType>Code</SubType>
     </Compile>

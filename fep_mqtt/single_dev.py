@@ -7,24 +7,38 @@ import json
 import redis
 import logging
 import random
+from my_mqtt import *
 
 
 class single_dev(threading.Thread): 
-    def __init__(self, dev_id, dev_info, channel):  
+    def __init__(self, dev_id, dev_info, channel, mqtt_obj):  
         threading.Thread.__init__(self)  
         self.interval = 15 #15秒的周期  
         self.thread_stop = False  
         self.dev_id = dev_id
         self.dev_info = dev_info
         self.channel = channel
+        self.latest_soc = 0
+        self._mqtt = mqtt_obj
 
         json_s = self.dev_info.get_dev_meas_info(dev_id)
         logging.info(json_s)
         self.points = json.loads(json_s)
 
+
+    def get_latest_soc(self):
+        return self.latest_soc
+
+
+    def set_latest_soc(self, soc):
+        self.latest_soc = soc
+
+
     def call_new_data(self):
         #TODO 发送召唤内容
-        print "call new data"
+        str = "call new data, id: %d, soc: %d" % (self.dev_id, self.latest_soc)
+        print str
+        self._mqtt.publish(str)
 
 
     def update_rtdb(self, new_data):
