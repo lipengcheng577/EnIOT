@@ -20,6 +20,7 @@ from iaas.dev_info import *
 from my_mqtt import *
 
 
+
 class rtdata_channel:
     def __init__(self):
         self.__conn = redis.Redis(host='127.0.0.1')
@@ -38,7 +39,7 @@ class rtdata_channel:
 
 
 #召唤数据间隔，单位秒
-GET_DATA_INTERVAL = 15
+GET_DATA_INTERVAL = 5
 
 if __name__ == "__main__":
     print '!!!!!!!!!!!!!!!!!!!!\n   FEP for MQTT\n!!!!!!!!!!!!!!!!!!!!\n'
@@ -54,7 +55,7 @@ if __name__ == "__main__":
     rtdata_ch = rtdata_channel()
     dev_info_obj = dev_info()
 
-    dev_ids = [10023,10024]
+    dev_ids = [10023]#,10024]
 
     dev_objs = []
     for dev_id in dev_ids:
@@ -65,8 +66,14 @@ if __name__ == "__main__":
 
     #循环判断所连接的设备，到时间了召唤，
     #上送的数据，由回调函数完成
+    counter = 0
     while True:
         soc = int(time.time())
+
+        while not DATA_QUEUE.empty():
+            print counter
+            counter += 1
+            print DATA_QUEUE.get()
 
         for dev in dev_objs:
             if soc >= dev.get_latest_soc()+GET_DATA_INTERVAL:

@@ -34,11 +34,21 @@ class single_dev(threading.Thread):
         self.latest_soc = soc
 
 
+    #cmd[命令：request, answer] data[量测字典，all-全部]
     def call_new_data(self):
         #TODO 发送召唤内容
-        str = "call new data, id: %d, soc: %d" % (self.dev_id, self.latest_soc)
-        print str
-        self._mqtt.publish(str)
+        send_data = {}
+        send_data['id'] = self.dev_id
+        send_data['data'] = "all"
+        send_data['cmd'] = 'request'
+        soc = int(time.time())
+        timestruct = time.localtime(soc)
+        timestring = time.strftime("'%Y-%m-%d %H:%M:%S'", timestruct)
+        send_data['time'] = timestring
+        send_data['soc'] = soc
+
+        print "call data: " + json.dumps(send_data)
+        self._mqtt.publish(json.dumps(send_data))
 
 
     def update_rtdb(self, new_data):

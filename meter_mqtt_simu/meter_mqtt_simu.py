@@ -8,6 +8,7 @@
 
 import paho.mqtt.client as mqtt
 import json
+import time
 
 MQTT_SUB_CHANNEL = "trina_energy_iot_down"
 MQTT_PUB_CHANNEL = "trina_energy_iot_up"
@@ -28,7 +29,7 @@ class my_mqtt():
          
                 
     def on_connect(self, client, userdata, flags, rc):
-        print("Connected with result code "+str(rc))
+        print("Connected with result code: "+str(rc))
 
         self.client.subscribe(MQTT_SUB_CHANNEL)
         self.client.publish( MQTT_PUB_CHANNEL, json.dumps({"user": "my_mqtt", "say": "the client is ready"})) 
@@ -39,10 +40,9 @@ class my_mqtt():
 
 
     def on_message(self, client, userdata, msg):
-#        payload = json.loads(msg.payload.decode())
-#        print(payload.get("user")+":"+payload.get("say"))
-        print msg.payload.decode()
-        self.client.publish(MQTT_SUB_CHANNEL, json.dumps({"temperature": "37.5", "humidity": "0.25"}))
+        print "SIMU::: " + msg.payload.decode()
+        self.client.publish(MQTT_PUB_CHANNEL, json.dumps({"temperature": "37.5", "humidity": "0.25"}))
+        print "send to pub over"
 
 
     def publish(self, msg):
@@ -56,6 +56,6 @@ if __name__ == '__main__':
     while True:
         str = raw_input()
         if str:
-            mqttttt.publish(MQTT_SUB_CHANNEL, json.dumps({"temperature": "37.5", "humidity": "0.25"}))
+            mqttttt.publish(json.dumps({"temperature": "38.5", "humidity": "0.33"}))
 
 

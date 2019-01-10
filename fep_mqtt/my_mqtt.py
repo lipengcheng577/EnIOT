@@ -3,9 +3,12 @@
 
 import paho.mqtt.client as mqtt
 import json
+import Queue
 
 MQTT_SUB_CHANNEL = "trina_energy_iot_up"
 MQTT_PUB_CHANNEL = "trina_energy_iot_down"
+
+DATA_QUEUE = Queue.Queue(maxsize = 100)
 
 class my_mqtt():
     def __init__(self):
@@ -13,29 +16,28 @@ class my_mqtt():
         self.client.username_pw_set("admin", "password")  # 必须设置，否则会返回「Connected with result code 4」
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
-        self.client.on_connect = self.on_disconnect
+        self.client.on_disconnect = self.on_disconnect
 
         HOST = "127.0.0.1"
-
         self.client.connect(HOST, 1883, 60)
-
         self.client.loop_start()
-         
+
                 
     def on_connect(self, client, userdata, flags, rc):
-        print("Connected with result code "+str(rc))
-
-        self.client.subscribe(MQTT_SUB_CHANNEL)
-        self.client.publish( MQTT_PUB_CHANNEL, json.dumps({"user": "my_mqtt", "say": "the server is ready"})) 
+        print "Connected with result code "+str(rc)
+        self.client.subscribe("trina_energy_iot_up")
+        self.client.publish( MQTT_PUB_CHANNEL, json.dumps({"user": "FEP_MQTT", "say": "the server is ready"})) 
 
 
     def on_disconnect(self, client, userdata, flags, rc):
-        print("disconnected with result code "+str(rc))
+        print "disconnected with result code "+str(rc) 
 
 
     def on_message(self, client, userdata, msg):
-        payload = json.loads(msg.payload.decode())
-        print(payload.get("temperature")+":"+payload.get("humidity"))
+        #print "get：" + msg.payload.decode() 这一句可能有问题，加了就收不到信息了，估计是不能print
+        data = json.loads(msg.payload.decode())
+        DATA_QUEUE.put(data)
+        print data.get("temperature")+":"+data.get("humidity")
 
 
     def publish(self, msg):
