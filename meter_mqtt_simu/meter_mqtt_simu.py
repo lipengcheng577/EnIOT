@@ -13,6 +13,8 @@ import time
 MQTT_SUB_CHANNEL = "trina_energy_iot_down"
 MQTT_PUB_CHANNEL = "trina_energy_iot_up"
 
+DEV_ID = 10023
+
 class my_mqtt():
     def __init__(self):
         self.client = mqtt.Client()
@@ -41,8 +43,16 @@ class my_mqtt():
 
     def on_message(self, client, userdata, msg):
         print "SIMU::: " + msg.payload.decode()
-        self.client.publish(MQTT_PUB_CHANNEL, json.dumps({"temperature": "37.5", "humidity": "0.25"}))
-        print "send to pub over"
+        data = {}
+        data["temperature"] = 37.5
+        data["humidity"] = 0.25
+        data['id'] = DEV_ID
+        soc = int(time.time())
+        data['soc'] = soc
+        timestruct = time.localtime(soc)
+        timestring = time.strftime("'%Y-%m-%d %H:%M:%S'", timestruct)
+        data['date_time'] = timestring
+        self.client.publish(MQTT_PUB_CHANNEL, json.dumps(data))
 
 
     def publish(self, msg):

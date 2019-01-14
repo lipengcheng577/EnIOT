@@ -37,7 +37,6 @@ class my_mqtt():
         #print "get：" + msg.payload.decode() 这一句可能有问题，加了就收不到信息了，估计是不能print
         data = json.loads(msg.payload.decode())
         DATA_QUEUE.put(data)
-        print data.get("temperature")+":"+data.get("humidity")
 
 
     def publish(self, msg):

@@ -51,18 +51,19 @@ if __name__ == "__main__":
     filename = "log.txt",
     filemode = 'a+')
 
-    mqtt_obj = my_mqtt()
-    rtdata_ch = rtdata_channel()
-    dev_info_obj = dev_info()
+    _mqtt = my_mqtt()
+    _rtdata_ch = rtdata_channel()
+    _dev_info = dev_info()
 
     dev_ids = [10023]#,10024]
-
     dev_objs = []
+    dev_dict = {}
     for dev_id in dev_ids:
-        dev_obj = single_dev(dev_id, dev_info_obj, rtdata_ch, mqtt_obj)
+        dev_obj = single_dev(dev_id, _dev_info, _rtdata_ch, _mqtt)
         #time.sleep(0.5)
         dev_obj.start()
         dev_objs.append(dev_obj)
+        dev_dict[dev_id] = dev_obj
 
     #循环判断所连接的设备，到时间了召唤，
     #上送的数据，由回调函数完成
@@ -73,7 +74,9 @@ if __name__ == "__main__":
         while not DATA_QUEUE.empty():
             print counter
             counter += 1
-            print DATA_QUEUE.get()
+            data = DATA_QUEUE.get()
+            id = data["id"]
+            dev_dict[id].update_rtdb(data)
 
         for dev in dev_objs:
             if soc >= dev.get_latest_soc()+GET_DATA_INTERVAL:

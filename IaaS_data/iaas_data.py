@@ -85,7 +85,7 @@ if __name__ == "__main__":
         data_dict = eval(rt_data[2])
         if data_dict.has_key('id'):  
             id = data_dict['id']
-            soc = data_dict['SOC']
+            soc = data_dict['soc']
             print "recv data, dev id = %d, soc=%d" % (id, soc)
             rtdb.mupdate_new_frame(int(id), data_dict)
             hisdb.insert_record(int(id), data_dict)

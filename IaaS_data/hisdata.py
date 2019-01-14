@@ -3,6 +3,7 @@
 
 from db_opt import *
 from dev_info import *
+import logging
 
 
 #历史库入库、出库接口
@@ -21,12 +22,14 @@ class hisdata(object):
     def create_hisdata_table(self, dev_id):
         '''按照设备ID创建历史数据表'''
         meas_list = self._dev_info.get_dev_meas_names(dev_id)
-        sql = "create table hisdata_%d ( index SERIAL, SOC text, date_time TEXT" % dev_id
+        sql = "create table hisdata_%d ( index SERIAL, soc text, date_time TEXT" % dev_id
+        
         for meas in meas_list:
             data_type = self._dev_info.get_meas_type(meas)
             sql += ", " + meas + " " + data_type
         sql += ")"
-
+        print sql
+        logging.info("SQL: " + sql)
         self._db.excute(sql)
 
 
@@ -49,6 +52,7 @@ class hisdata(object):
         sql_field += " ) "
         sql_value += " ) "
         sql = "insert into %s %s values %s " % (table_name, sql_field, sql_value)
+        logging.info("SQL: " + sql)
         if self._db.excute(sql) is False:
             self.create_hisdata_table(dev_id)
             self._db.excute(sql)

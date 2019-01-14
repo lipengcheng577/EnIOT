@@ -27,7 +27,7 @@ class single_dev(threading.Thread ):
             ret = {}
             ret['id'] = self.dev_id
             soc = int(time.time())
-            ret['SOC'] = soc
+            ret['soc'] = soc
             timestruct = time.localtime(soc)
             timestring = time.strftime("'%Y-%m-%d %H:%M:%S'", timestruct)
             ret['date_time'] = timestring
