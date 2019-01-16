@@ -47,7 +47,8 @@ class single_dev(threading.Thread):
         send_data['time'] = timestring
         send_data['soc'] = soc
 
-        print "call data: " + json.dumps(send_data)
+        print "call data: "
+        print send_data
         self._mqtt.publish(json.dumps(send_data))
 
 

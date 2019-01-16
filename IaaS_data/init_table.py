@@ -56,7 +56,7 @@ class init_table(object):
             sql = "drop table " + table
             self._db.excute(sql)
 
-
+ 
     #往实例化表里添加数据，读取响应配置文件
     def init_instance_table(self, table_name, file_path):
         print 'init_instance_table: ' + table_name

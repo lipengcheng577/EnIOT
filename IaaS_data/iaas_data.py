@@ -31,7 +31,11 @@ def table_init():
 
     table_opt.init_point_table()
 
+
+
     #table_opt.create_point_table_file(1001001)
+
+
 
 class rtdata_channel:
 

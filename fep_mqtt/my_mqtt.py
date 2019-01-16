@@ -26,7 +26,7 @@ class my_mqtt():
     def on_connect(self, client, userdata, flags, rc):
         print "Connected with result code "+str(rc)
         self.client.subscribe("trina_energy_iot_up")
-        self.client.publish( MQTT_PUB_CHANNEL, json.dumps({"user": "FEP_MQTT", "say": "the server is ready"})) 
+#        self.client.publish( MQTT_PUB_CHANNEL, json.dumps({"P": "FEP_MQTT", "Q": "the server is ready"})) 
 
 
     def on_disconnect(self, client, userdata, flags, rc):

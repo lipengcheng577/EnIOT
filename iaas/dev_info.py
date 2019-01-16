@@ -14,6 +14,17 @@ class dev_info(object):
         self._db = db_opt.db_opt()
 
 
+    def get_dev_id_list(self):
+        sql = "select id from dev_instance"
+        rows = self._db.select(sql)
+        point_table_name = rows[0][0]
+        id_list = []
+        for row in rows:
+            id_list.append(row[0])
+            
+        return id_list
+
+
     def get_dev_meas_names(self, dev_id):
         '''获取测点名称列表'''
         sql = "select dev_model from dev_instance where id=%d" % (dev_id)

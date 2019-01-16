@@ -4,7 +4,6 @@
 # Python Version:2.7
 
 
-
 import sys
 sys.path.append("..")
 
@@ -18,7 +17,6 @@ import random
 from single_dev import *
 from iaas.dev_info import *
 from my_mqtt import *
-
 
 
 class rtdata_channel:
@@ -55,7 +53,7 @@ if __name__ == "__main__":
     _rtdata_ch = rtdata_channel()
     _dev_info = dev_info()
 
-    dev_ids = [10023]#,10024]
+    dev_ids = [50001,50002]
     dev_objs = []
     dev_dict = {}
     for dev_id in dev_ids:
@@ -75,8 +73,18 @@ if __name__ == "__main__":
             print counter
             counter += 1
             data = DATA_QUEUE.get()
-            id = data["id"]
-            dev_dict[id].update_rtdb(data)
+            
+            if 'id' in data.keys():
+                if 'heart' in data.keys():
+                    print "get haert report, id = %d" % data["id"]
+                else:  
+                    id = data["id"]
+                    if id in dev_dict.keys():
+                        dev_dict[id].update_rtdb(data)
+                    continue
+            else:
+                print "wwwwwwwwwww"
+                print data
 
         for dev in dev_objs:
             if soc >= dev.get_latest_soc()+GET_DATA_INTERVAL:

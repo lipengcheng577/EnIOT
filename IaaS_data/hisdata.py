@@ -13,10 +13,21 @@ class hisdata(object):
         self._db = db_opt.db_opt()
         self._dev_info = dev_info()
 
+        #self.drop_all_his_table()
+
 
     def test(self):
         ret = self._db.if_table_exit( "dev_info" )
         print ret
+
+    def drop_all_his_table(self):
+        logging.info( "Drop all hisdata table" )
+        print "Drop all hisdata table"
+        dev_ids = self._dev_info.get_dev_id_list()
+        for id in dev_ids:
+            table_name = "hisdata_%s" % id
+            sql = "drop table " + table_name
+            self._db.excute(sql)
 
 
     def create_hisdata_table(self, dev_id):
