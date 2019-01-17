@@ -40,7 +40,7 @@ class my_mqtt():
 
 
     def on_message(self, client, userdata, msg):
-        print "SIMU::: " + msg.payload.decode()
+        print("SIMU::: " + msg.payload.decode())
         data = {}
         data["p"] = 37.5
         data["q"] = 0.25

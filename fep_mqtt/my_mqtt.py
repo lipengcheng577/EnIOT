@@ -3,12 +3,12 @@
 
 import paho.mqtt.client as mqtt
 import json
-import Queue
+import queue
 
 MQTT_SUB_CHANNEL = "trina_energy_iot_up"
 MQTT_PUB_CHANNEL = "trina_energy_iot_down"
 
-DATA_QUEUE = Queue.Queue(maxsize = 100)
+DATA_QUEUE = queue.Queue(maxsize = 100)
 
 class my_mqtt():
     def __init__(self):
@@ -24,13 +24,13 @@ class my_mqtt():
 
                 
     def on_connect(self, client, userdata, flags, rc):
-        print "Connected with result code "+str(rc)
+        print("Connected with result code "+str(rc))
         self.client.subscribe("trina_energy_iot_up")
 #        self.client.publish( MQTT_PUB_CHANNEL, json.dumps({"P": "FEP_MQTT", "Q": "the server is ready"})) 
 
 
     def on_disconnect(self, client, userdata, flags, rc):
-        print "disconnected with result code "+str(rc) 
+        print("disconnected with result code "+str(rc) )
 
 
     def on_message(self, client, userdata, msg):

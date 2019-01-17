@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import ConfigParser
+import configparser
 
 from db_opt import *
 import logging
@@ -19,14 +19,14 @@ class init_table(object):
 
     '''read table_info.ini'''
     def read_table_info_ini(self):
-        print 'read table info start ...'
+        print('read table info start ...')
 
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
 
         try:
-            config.read("./ini/table_info.ini")
+            config.read("./ini/table_info.ini", encoding='utf-8')
         except IOError:
-            print "打开table_info.ini 失败！"
+            print("打开table_info.ini 失败！")
             return
 
         self._tables = config.sections()
@@ -59,12 +59,12 @@ class init_table(object):
  
     #往实例化表里添加数据，读取响应配置文件
     def init_instance_table(self, table_name, file_path):
-        print 'init_instance_table: ' + table_name
-        config = ConfigParser.ConfigParser()
+        print('init_instance_table: ' + table_name)
+        config = configparser.ConfigParser()
 
         file_name = "./ini/" + file_path + table_name + ".ini"
         try:
-            config.read(file_name)
+            config.read(file_name, encoding='utf-8')
         except IOError:
             logging.error("打开 %s 失败！", file_name)
             return
@@ -79,7 +79,7 @@ class init_table(object):
             sql_value = "( "
             for column in columns:
                 sql_key += column[0]
-                sql_value += column[1].decode("utf-8")
+                sql_value += column[1]
                 if counter != len(columns):
                     sql_key += ', '
                     sql_value += ', '
@@ -94,12 +94,12 @@ class init_table(object):
     #依据dev_model中的data_attr, 以及dev_model中的point_table_name，生成空白配置文件
     #免去人工输入，
     def create_point_table_file(self, dev_model_id):
-        print u"创建点表配置文件, 设备型号: %d" % (dev_model_id)
+        print("创建点表配置文件, 设备型号: %d" % (dev_model_id))
         #select id_father, point_table_name from dev_model where id=dev_model_id
         sss = "select id_father, point_table_name, company, model from dev_model where id=%d" % (dev_model_id)
         row1s = self._db.select(sss)
         for row in row1s:
-            print 'id_father= %d , point_table_name=%s \n' % ( row[0], row[1])
+            print('id_father= %d , point_table_name=%s \n' % ( row[0], row[1]))
         
         id_father = int(row[0])
         #select data_attr from dev_type where id = id_father
@@ -133,7 +133,7 @@ class init_table(object):
     def init_point_table(self):
         #从dev_model里找出所有point_table_name，建表，然后 读取配置文件，插入数据
         #select point_table_name from dev_model
-        print "init point table"
+        print("init point table")
         sss = "select point_table_name from dev_model"
         row1s = self._db.select(sss)
         for row in row1s:

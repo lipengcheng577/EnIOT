@@ -33,10 +33,10 @@ class rtdata_channel:
 
 
 if __name__ == "__main__":
-    print '!!!!!!!!!!!!!!!!!!!!\n   FEP SIMULATOR\n!!!!!!!!!!!!!!!!!!!!\n'
+    print('!!!!!!!!!!!!!!!!!!!!\n   FEP SIMULATOR\n!!!!!!!!!!!!!!!!!!!!\n')
     # Print out the menu:
-    print "Input: " 
-    print "stop --exit the program"
+    print("Input: " )
+    print( "stop --exit the program")
 
     #cmd = raw_input( "> " )
     #if cmd == 'start':
@@ -66,17 +66,17 @@ if __name__ == "__main__":
 
 
     while True:
-        print 'Fep is running...'
+        print('Fep is running...')
 
-        cmd = raw_input( "> " ) 
+        cmd = input( "> " ) 
         if cmd == 'stop':
-            print u"End Fep simu..."
+            print("End Fep simu...")
             for dev_obj in dev_objs:
                 dev_obj.stop()
             time.sleep(15)
             break
         else:
-            print u"无效命令"
+            print("无效命令")
         time.sleep(1)
     
 

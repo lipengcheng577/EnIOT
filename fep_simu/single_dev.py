@@ -41,13 +41,12 @@ class single_dev(threading.Thread ):
                 ret[point_name] = value
 
             json_ret = json.dumps(ret, sort_keys=True)
-            #print json_ret
-            print "send data, dev id = %d, soc=%d" % (self.dev_id, soc)
+            print( "send data, dev id = %d, soc=%d" % (self.dev_id, soc) )
 
             self.channel.public(json_ret)
             time.sleep(15)
 
-        print u"设备 %d 线程结束! " % self.dev_id
+        print("设备 %d 线程结束! " % self.dev_id)
 
     def stop(self):  
         self.thread_stop = True  

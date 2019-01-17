@@ -4,7 +4,7 @@
 import sys
 sys.path.append("..")
 
-import ConfigParser
+import configparser
 import logging
 import codecs
 import json
@@ -54,9 +54,19 @@ class rtdata_channel:
         pub.parse_response()
         return pub
 
+    
+import numpy as np
+class MyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, bytes):
+            return str(obj, encoding='utf-8');
+        return json.JSONEncoder.default(self, obj)
+
 
 if __name__ == "__main__":
-    print '*********************\n   IAAS_DATA\n *********************\n'
+    print('*********************\n   IAAS_DATA\n *********************\n')
     #定义日志输出格式
     logging.basicConfig(level=logging.INFO,
     format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
@@ -84,17 +94,17 @@ if __name__ == "__main__":
         msg= rt_sub.parse_response()
         logging.info(msg)
 
-        msg_string = json.dumps(msg)
+        msg_string = json.dumps(msg, cls=MyEncoder)
         rt_data = json.loads(msg_string)
         data_dict = eval(rt_data[2])
-        if data_dict.has_key('id'):  
+        if 'id' in data_dict.keys():  
             id = data_dict['id']
             soc = data_dict['soc']
-            print "recv data, dev id = %d, soc=%d" % (id, soc)
+            print("recv data, dev id = %d, soc=%d" % (id, soc))
             rtdb.mupdate_new_frame(int(id), data_dict)
             hisdb.insert_record(int(id), data_dict)
         else:
-            print "Wrong data, there is no ID"
+            print("Wrong data, there is no ID")
 
 
     

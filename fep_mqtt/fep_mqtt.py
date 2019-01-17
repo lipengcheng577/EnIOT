@@ -6,6 +6,7 @@
 
 import sys
 sys.path.append("..")
+sys.path.append("../iaas")
 
 import logging
 import codecs
@@ -40,7 +41,7 @@ class rtdata_channel:
 GET_DATA_INTERVAL = 5
 
 if __name__ == "__main__":
-    print '!!!!!!!!!!!!!!!!!!!!\n   FEP for MQTT\n!!!!!!!!!!!!!!!!!!!!\n'
+    print('!!!!!!!!!!!!!!!!!!!!\n   FEP for MQTT\n!!!!!!!!!!!!!!!!!!!!\n')
 
     #定义日志输出格式
     logging.basicConfig(level=logging.INFO,
@@ -70,21 +71,21 @@ if __name__ == "__main__":
         soc = int(time.time())
 
         while not DATA_QUEUE.empty():
-            print counter
+            print(counter)
             counter += 1
             data = DATA_QUEUE.get()
             
             if 'id' in data.keys():
                 if 'heart' in data.keys():
-                    print "get haert report, id = %d" % data["id"]
+                    print("get haert report, id = %d" % data["id"])
                 else:  
                     id = data["id"]
                     if id in dev_dict.keys():
                         dev_dict[id].update_rtdb(data)
                     continue
             else:
-                print "wwwwwwwwwww"
-                print data
+                print("wwwwwwwwwww")
+                print(data)
 
         for dev in dev_objs:
             if soc >= dev.get_latest_soc()+GET_DATA_INTERVAL:

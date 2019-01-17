@@ -18,11 +18,10 @@ class hisdata(object):
 
     def test(self):
         ret = self._db.if_table_exit( "dev_info" )
-        print ret
 
     def drop_all_his_table(self):
         logging.info( "Drop all hisdata table" )
-        print "Drop all hisdata table"
+        print("Drop all hisdata table")
         dev_ids = self._dev_info.get_dev_id_list()
         for id in dev_ids:
             table_name = "hisdata_%s" % id
@@ -39,7 +38,7 @@ class hisdata(object):
             data_type = self._dev_info.get_meas_type(meas)
             sql += ", " + meas + " " + data_type
         sql += ")"
-        print sql
+        print(sql)
         logging.info("SQL: " + sql)
         self._db.excute(sql)
 

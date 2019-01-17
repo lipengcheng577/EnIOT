@@ -17,7 +17,7 @@ class db_opt(object):
         
     def connect_db(self):
         self._conn = psycopg2.connect(database="EnIOT", user="postgres", password="abcd-1234", host="127.0.0.1", port="5432")
-        print "Open database successfully"
+        print("Open database successfully")
   
     def close_db(self):
         self._conn.close()
