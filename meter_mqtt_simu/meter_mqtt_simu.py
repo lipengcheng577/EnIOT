@@ -9,6 +9,7 @@
 import paho.mqtt.client as mqtt
 import json
 import time
+import datetime
 
 MQTT_SUB_CHANNEL = "trina_energy_iot_down"
 MQTT_PUB_CHANNEL = "trina_energy_iot_up"
@@ -40,17 +41,31 @@ class my_mqtt():
 
 
     def on_message(self, client, userdata, msg):
-        print("SIMU::: " + msg.payload.decode())
-        data = {}
-        data["p"] = 37.5
-        data["q"] = 0.25
-        data['id'] = DEV_ID
-        soc = int(time.time())
-        data['soc'] = soc
-        timestruct = time.localtime(soc)
-        timestring = time.strftime("'%Y-%m-%d %H:%M:%S'", timestruct)
-        data['date_time'] = timestring
-        self.client.publish(MQTT_PUB_CHANNEL, json.dumps(data))
+        request = json.loads(msg.payload.decode())
+        
+        if "id" in request.keys():
+            if request["id"] == DEV_ID:
+                print("SIMU::: " + msg.payload.decode())
+                if 'heart' in request.keys():
+                    print( "心跳报文" )
+                else:
+                    soc = int(time.time())
+                    timestruct = time.localtime(soc)
+                    timestring = time.strftime("'%Y-%m-%d %H:%M:%S'", timestruct)
+                    curr = datetime.datetime.now()
+
+                    data = {}
+                    data["p"] = curr.minute
+                    data["q"] = curr.second
+                    data['id'] = DEV_ID
+                    data['soc'] = soc
+                    data['date_time'] = timestring
+                    self.client.publish(MQTT_PUB_CHANNEL, json.dumps(data))
+            else:
+                print("Other ID")
+        else:
+            print("WWWWWWWWWW")
+       
 
 
     def publish(self, msg):
