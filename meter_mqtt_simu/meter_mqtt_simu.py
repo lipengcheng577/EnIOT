@@ -74,6 +74,7 @@ class my_mqtt():
 
 if __name__ == '__main__':
    
+    print('*********************\n  METER SIMU MQTT\n *********************\n')
     mqttttt = my_mqtt()
 
     while True:
