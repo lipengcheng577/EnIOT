@@ -71,14 +71,6 @@ if __name__ == "__main__":
     filename = "log.txt",
     filemode = 'a+')
 
-    #console = logging.StreamHandler()
-    #console.setLevel(logging.INFO)
-    #formatter = logging.Formatter('%(name)s : %(levelname)s : %(message)s')
-    #console.setFormatter(formatter)
-    #logging.getLogger('').addHandler(console)
-
-    #logging.info("++++++++++++++++++++++++++++")
-
     rtdb = rtdata()
     hisdb = hisdata()
 

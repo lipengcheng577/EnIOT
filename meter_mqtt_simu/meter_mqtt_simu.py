@@ -72,10 +72,20 @@ class my_mqtt():
         self.client.publish( MQTT_PUB_CHANNEL, msg) 
 
 
+
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+
 if __name__ == '__main__':
    
     print('*********************\n  METER SIMU MQTT\n *********************\n')
     mqttttt = my_mqtt()
+
+    app = QApplication(sys.argv)
+    w = QWidget()
+    w.show()
+    w.setWindowTitle("Hello PyQt5")
+    sys.exit(app.exec_())
 
     while True:
         mqttttt.publish(json.dumps({"heart": DEV_ID, "id": DEV_ID}))
