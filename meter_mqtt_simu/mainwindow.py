@@ -42,7 +42,7 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
 
         self.sm_widgets = {}
         for meter_id in self.meters_dict:
-            sm_wdgt = single_meter_widget(self.meters_name[meter_id], self.meters_dict[meter_id])
+            sm_wdgt = single_meter_widget(meter_id, self.meters_name[meter_id], self.meters_dict[meter_id])
             self.sm_widgets[meter_id] = sm_wdgt
             self.toolBoxDevList.addItem(sm_wdgt, self.meters_name[meter_id])
 
@@ -109,8 +109,7 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
                     else:
                         self.append_msg( "%s 召唤数据, id = %d" % (timestring, meter_id) )
                         self.sm_widgets[meter_id].show_msg( "%s 召唤数据" % (timestring) )
-
-                        
+                        self.sm_widgets[meter_id].get_data()
 
                         #data = {}
                         #data["p"] = curr.minute

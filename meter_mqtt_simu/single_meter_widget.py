@@ -1,12 +1,14 @@
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QWidget, QGridLayout, QTableWidget, QTextBrowser, QTableWidgetItem
 
+import json, time
 
 class single_meter_widget(QtWidgets.QWidget):
     """description of class"""
 
-    def __init__(self, name, meas_dict):
+    def __init__(self, id, name, meas_dict):
         QtWidgets.QWidget.__init__(self)
+        self.id = id
         self.name = name
         self.meas_dict = meas_dict
         self.grid = QGridLayout(self)
@@ -36,6 +38,28 @@ class single_meter_widget(QtWidgets.QWidget):
 
     def show_msg(self, msg):
         self.frame_show.append(msg)
+
+
+    def get_data(self):
+        row_count = self.meas_table.rowCount()
+
+        data = {}
+
+        data['id'] = self.id
+
+        soc = int(time.time())
+        timestruct = time.localtime(soc)
+        timestring = time.strftime("%Y-%m-%d %H:%M:%S", timestruct)
+        
+        data['soc'] = soc
+        data['date_time'] = timestring
+        for i in range(0, row_count):
+            meas_name = self.meas_table.item(i,0).text()
+            meas_val = self.meas_table.item(i,1).text()
+            data[meas_name] = float(meas_val)
+
+        self.show_msg(json.dumps(data))
+
 
     
         
