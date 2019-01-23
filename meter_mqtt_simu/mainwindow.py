@@ -2,12 +2,15 @@
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QWidget, QMessageBox, QFileDialog
 from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtCore import QTimer
 import sys
 import os
 from single_meter_widget import single_meter_widget
 import configparser
-#from main import Ui_Main
+import queue, json, time, datetime
 
+
+MQTT_DOWN_QUEUE = queue.Queue(maxsize = 1000)
 
 qtCreatorFile = "meter_mqtt.ui" # Enter file here.
 ui_widget, QtBaseClass = uic.loadUiType(qtCreatorFile)
@@ -23,6 +26,13 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
 
         self.meter_state = False
         self.toolButtonStart.clicked.connect(self.start_meter)
+
+        self.counter = 1
+        self.timer = QTimer()      
+        self.timer.setInterval(100)       
+        self.timer.start()
+         # 信号连接到槽       
+        self.timer.timeout.connect(self.onDelMsgQueue)
        
 
     def init_meter_list(self):
@@ -30,9 +40,11 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
 
         self.read_config()
 
-        for meter in self.meters_dict:
-            sm_wdgt = single_meter_widget(meter, self.meters_dict[meter])
-            self.toolBoxDevList.addItem(sm_wdgt, meter)
+        self.sm_widgets = {}
+        for meter_id in self.meters_dict:
+            sm_wdgt = single_meter_widget(self.meters_name[meter_id], self.meters_dict[meter_id])
+            self.sm_widgets[meter_id] = sm_wdgt
+            self.toolBoxDevList.addItem(sm_wdgt, self.meters_name[meter_id])
 
 
     def read_config(self):
@@ -48,13 +60,20 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
 
 
         self.meters_dict = {}
+        self.meters_name = {}
         meters = config.sections()
         for meter in meters:
             meases = config.items(meter)
             meas_dict = {}
-            for meas in meases:
-                meas_dict[meas[0]] = meas[1]
-            self.meters_dict[meter] = meas_dict
+            id = int(meter)
+            for meas in meases:    
+                if meas[0] == "name":
+                    self.meters_name[id] = meas[1]
+                else:
+                    meas_dict[meas[0]] = meas[1]
+
+            self.meters_dict[id] = meas_dict        
+
 
     def start_meter(self):
         if self.meter_state == True:
@@ -66,8 +85,46 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
             self.toolButtonStart.setIcon( QIcon( "images//stop.png" ) );
             self.append_msg('启动通信')
 
+
     def append_msg(self, msg):
         self.textBrowserMsg.append(msg)
+
+
+    def onDelMsgQueue(self):
+        while not MQTT_DOWN_QUEUE.empty():
+            msg = MQTT_DOWN_QUEUE.get()
+            request = json.loads(msg.payload.decode())
+
+            soc = int(time.time())
+            timestruct = time.localtime(soc)
+            timestring = time.strftime("%Y-%m-%d %H:%M:%S", timestruct)
+           
+
+            if "id" in request.keys():
+                meter_id = request["id"]
+                if meter_id in self.sm_widgets.keys():
+                    if 'heart' in request.keys():
+                        self.append_msg( "%s 心跳报文, id = %d" % (timestring, meter_id) )
+                        self.sm_widgets[meter_id].show_msg( "%s 心跳报文" % (timestring) )
+                    else:
+                        self.append_msg( "%s 召唤数据, id = %d" % (timestring, meter_id) )
+                        self.sm_widgets[meter_id].show_msg( "%s 召唤数据" % (timestring) )
+
+                        
+
+                        #data = {}
+                        #data["p"] = curr.minute
+                        #data["q"] = curr.second
+                        #data['id'] = DEV_ID
+                        #data['soc'] = soc
+                        #data['date_time'] = timestring
+                        #self.client.publish(MQTT_PUB_CHANNEL, json.dumps(data))
+                else:
+                    self.append_msg( "设备ID不在列表中 id = %d", meter_id )
+            else:
+                self.append_msg("WWWWWWWWWW")
+
+        
 
             
      

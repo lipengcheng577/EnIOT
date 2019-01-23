@@ -34,6 +34,9 @@ class single_meter_widget(QtWidgets.QWidget):
             row += 1
 
 
+    def show_msg(self, msg):
+        self.frame_show.append(msg)
+
     
         
 

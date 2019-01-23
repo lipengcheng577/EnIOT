@@ -10,11 +10,12 @@ import paho.mqtt.client as mqtt
 import json
 import time
 import datetime
+import queue
 
 MQTT_SUB_CHANNEL = "trina_energy_iot_down"
 MQTT_PUB_CHANNEL = "trina_energy_iot_up"
 
-DEV_ID = 50002
+from mainwindow import *
 
 class my_mqtt():
     def __init__(self):
@@ -41,31 +42,7 @@ class my_mqtt():
 
 
     def on_message(self, client, userdata, msg):
-        request = json.loads(msg.payload.decode())
-        
-        if "id" in request.keys():
-            if request["id"] == DEV_ID:
-                print("SIMU::: " + msg.payload.decode())
-                if 'heart' in request.keys():
-                    print( "心跳报文" )
-                else:
-                    soc = int(time.time())
-                    timestruct = time.localtime(soc)
-                    timestring = time.strftime("'%Y-%m-%d %H:%M:%S'", timestruct)
-                    curr = datetime.datetime.now()
-
-                    data = {}
-                    data["p"] = curr.minute
-                    data["q"] = curr.second
-                    data['id'] = DEV_ID
-                    data['soc'] = soc
-                    data['date_time'] = timestring
-                    self.client.publish(MQTT_PUB_CHANNEL, json.dumps(data))
-            else:
-                print("Other ID")
-        else:
-            print("WWWWWWWWWW")
-       
+        MQTT_DOWN_QUEUE.put(msg)   
 
 
     def publish(self, msg):
@@ -73,7 +50,6 @@ class my_mqtt():
 
 
 
-from mainwindow import *
 def start_window():
     app = QtWidgets.QApplication(sys.argv)
     window = mainwindow()
@@ -82,10 +58,10 @@ def start_window():
 
 if __name__ == '__main__':
 
-    start_window()
-
     print('*********************\n  METER SIMU MQTT\n *********************\n')
     mqttttt = my_mqtt()
+
+    start_window()
 
     while True:
         mqttttt.publish(json.dumps({"heart": DEV_ID, "id": DEV_ID}))

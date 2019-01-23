@@ -54,7 +54,7 @@ if __name__ == "__main__":
     _rtdata_ch = rtdata_channel()
     _dev_info = dev_info()
 
-    dev_ids = [50001,50002]
+    dev_ids = [51001,51002,51003,51004,51005]
     dev_objs = []
     dev_dict = {}
     for dev_id in dev_ids:
