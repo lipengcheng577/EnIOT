@@ -5,12 +5,11 @@ from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QTimer
 import sys
 import os
-from single_meter_widget import single_meter_widget
+from single_meter_widget import *
 import configparser
 import queue, json, time, datetime
+from my_mqtt import *
 
-
-MQTT_DOWN_QUEUE = queue.Queue(maxsize = 1000)
 
 qtCreatorFile = "meter_mqtt.ui" # Enter file here.
 ui_widget, QtBaseClass = uic.loadUiType(qtCreatorFile)
@@ -33,6 +32,8 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
         self.timer.start()
          # 信号连接到槽       
         self.timer.timeout.connect(self.onDelMsgQueue)
+
+        self.mqt = my_mqtt()
        
 
     def init_meter_list(self):
@@ -80,10 +81,14 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
             self.meter_state = False
             self.toolButtonStart.setIcon( QIcon( "images//start.png" ) );
             self.append_msg('停止通信')
+
+            self.mqt.stop()
         else:
             self.meter_state = True
             self.toolButtonStart.setIcon( QIcon( "images//stop.png" ) );
             self.append_msg('启动通信')
+
+            self.mqt.start()
 
 
     def append_msg(self, msg):
@@ -99,7 +104,6 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
             timestruct = time.localtime(soc)
             timestring = time.strftime("%Y-%m-%d %H:%M:%S", timestruct)
            
-
             if "id" in request.keys():
                 meter_id = request["id"]
                 if meter_id in self.sm_widgets.keys():
@@ -122,6 +126,11 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
                     self.append_msg( "设备ID不在列表中 id = %d", meter_id )
             else:
                 self.append_msg("WWWWWWWWWW")
+        
+        while not MQTT_UP_QUEUE.empty():
+            print('up msg')
+            msg = MQTT_UP_QUEUE.get()
+            self.mqt.publish(msg)
 
         
 

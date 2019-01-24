@@ -26,6 +26,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="meter_mqtt_simu.py" />
+    <Compile Include="my_mqtt.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="single_meter_widget.py">
       <SubType>Code</SubType>
     </Compile>

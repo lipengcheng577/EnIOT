@@ -2,6 +2,9 @@ from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QWidget, QGridLayout, QTableWidget, QTextBrowser, QTableWidgetItem
 
 import json, time
+import queue
+
+MQTT_UP_QUEUE = queue.Queue(maxsize = 1000)
 
 class single_meter_widget(QtWidgets.QWidget):
     """description of class"""
@@ -17,7 +20,7 @@ class single_meter_widget(QtWidgets.QWidget):
         self.meas_table.setRowCount( len(meas_dict))
         self.meas_table.setColumnCount(2)
 
-        header = [ "量测名称", "值"]
+        header = [ "量测名称", "值" ]
         self.meas_table.setHorizontalHeaderLabels(header)
 
         self.grid.addWidget(self.meas_table, 0, 0, 1, 1)
@@ -49,7 +52,7 @@ class single_meter_widget(QtWidgets.QWidget):
 
         soc = int(time.time())
         timestruct = time.localtime(soc)
-        timestring = time.strftime("%Y-%m-%d %H:%M:%S", timestruct)
+        timestring = time.strftime("'%Y-%m-%d %H:%M:%S'", timestruct)
         
         data['soc'] = soc
         data['date_time'] = timestring
@@ -59,6 +62,7 @@ class single_meter_widget(QtWidgets.QWidget):
             data[meas_name] = float(meas_val)
 
         self.show_msg(json.dumps(data))
+        MQTT_UP_QUEUE.put(json.dumps(data))
 
 
     

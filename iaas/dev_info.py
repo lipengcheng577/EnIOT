@@ -47,8 +47,13 @@ class dev_info(object):
 
     def get_meas_type(self, name):
         sql = "select data_type from data_point_dict where name= '%s' " % (name)
-        rows = self._db.select(sql)
-        return rows[0][0]
+        try:
+            rows = self._db.select(sql)
+            return rows[0][0]
+        except:
+            print('ERRRORR')
+            logging.error(sql)
+
         
 
     #从设备ID获取设备量点表，返回json格式
