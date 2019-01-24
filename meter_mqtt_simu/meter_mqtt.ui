@@ -39,6 +39,32 @@
       </widget>
      </item>
      <item>
+      <widget class="QLineEdit" name="lineEditHost">
+       <property name="maximumSize">
+        <size>
+         <width>130</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>127.0.0.1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditPort">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>1883</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="toolButtonStart">
        <property name="minimumSize">
         <size>
@@ -78,7 +104,7 @@
           <x>0</x>
           <y>0</y>
           <width>801</width>
-          <height>376</height>
+          <height>156</height>
          </rect>
         </property>
         <attribute name="label">

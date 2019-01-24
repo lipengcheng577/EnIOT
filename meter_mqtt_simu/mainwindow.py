@@ -1,6 +1,6 @@
 
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QWidget, QMessageBox, QFileDialog
+from PyQt5.QtWidgets import QWidget, QMessageBox, QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QTimer
 import sys
@@ -77,6 +77,9 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
 
 
     def start_meter(self):
+        host = self.lineEditHost.text()
+        port = int(self.lineEditPort.text())
+
         if self.meter_state == True:
             self.meter_state = False
             self.toolButtonStart.setIcon( QIcon( "images//start.png" ) );
@@ -84,11 +87,14 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
 
             self.mqt.stop()
         else:
+            ret = self.mqt.start(host, port)
+            if ret != 0:
+                QMessageBox.critical(self,"Error", "请检查host和port是否正确!") 
+                return
+
             self.meter_state = True
             self.toolButtonStart.setIcon( QIcon( "images//stop.png" ) );
             self.append_msg('启动通信')
-
-            self.mqt.start()
 
 
     def append_msg(self, msg):
@@ -128,7 +134,6 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
                 self.append_msg("WWWWWWWWWW")
         
         while not MQTT_UP_QUEUE.empty():
-            print('up msg')
             msg = MQTT_UP_QUEUE.get()
             self.mqt.publish(msg)
 

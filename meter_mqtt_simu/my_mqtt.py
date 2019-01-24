@@ -21,10 +21,16 @@ class my_mqtt():
 
         #self.client.loop_start()
 
-    def start(self):
-        HOST = "127.0.0.1"
-        self.client.connect(HOST, 1883, 60)
-        self.client.loop_start()
+    def start(self, host="127.0.0.1", port=1883):
+        try:
+            ret = self.client.connect(host, port, 60)
+            if ret != 0:
+                return ret
+            else:
+                self.client.loop_start()
+                return 0
+        except:
+            return -1
 
 
     def stop(self):
@@ -44,7 +50,6 @@ class my_mqtt():
 
 
     def on_message(self, client, userdata, msg):
-        print('new msg')
         MQTT_DOWN_QUEUE.put(msg)   
 
 
