@@ -61,6 +61,12 @@ class single_meter_widget(QtWidgets.QWidget):
             meas_val = self.meas_table.item(i,1).text()
             data[meas_name] = float(meas_val)
 
+        z = data['ua']*data['ia'] + data['ub']*data['ib'] + data['uc']*data['ic']
+        p = data['cos'] * z
+        q = data['cos'] * z 
+        data['z'] = z
+        data['p'] = p
+        data['q'] = q
         self.show_msg(json.dumps(data))
         MQTT_UP_QUEUE.put(json.dumps(data))
 

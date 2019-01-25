@@ -119,15 +119,7 @@ class mainwindow(QtWidgets.QWidget, ui_widget):
                     else:
                         self.append_msg( "%s 召唤数据, id = %d" % (timestring, meter_id) )
                         self.sm_widgets[meter_id].show_msg( "%s 召唤数据" % (timestring) )
-                        self.sm_widgets[meter_id].get_data()
-
-                        #data = {}
-                        #data["p"] = curr.minute
-                        #data["q"] = curr.second
-                        #data['id'] = DEV_ID
-                        #data['soc'] = soc
-                        #data['date_time'] = timestring
-                        #self.client.publish(MQTT_PUB_CHANNEL, json.dumps(data))
+                        self.sm_widgets[meter_id].get_data()                 
                 else:
                     self.append_msg( "设备ID不在列表中 id = %d", meter_id )
             else:
