@@ -9,6 +9,10 @@ import datetime
 import logging
 logging.getLogger().setLevel(logging.INFO)
 
+
+DB_HOST = "10.37.52.73"
+#DB_HOST = "127.0.0.1"
+
 class db_opt(object):
     """description of class"""
 
@@ -16,7 +20,7 @@ class db_opt(object):
         self.connect_db()
         
     def connect_db(self):
-        self._conn = psycopg2.connect(database="EnIOT", user="postgres", password="abcd-1234", host="127.0.0.1", port="5432")
+        self._conn = psycopg2.connect(database="EnIOT", user="postgres", password="abcd-1234", host="10.37.52.73", port="5432")
         print("Open database successfully")
   
     def close_db(self):

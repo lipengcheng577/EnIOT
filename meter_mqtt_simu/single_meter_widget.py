@@ -69,9 +69,3 @@ class single_meter_widget(QtWidgets.QWidget):
         data['q'] = q
         self.show_msg(json.dumps(data))
         MQTT_UP_QUEUE.put(json.dumps(data))
-
-
-    
-        
-
-

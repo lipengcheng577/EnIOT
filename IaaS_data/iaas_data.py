@@ -3,6 +3,7 @@
 
 import sys
 sys.path.append("..")
+sys.path.append("../iaas")
 
 import configparser
 import logging
