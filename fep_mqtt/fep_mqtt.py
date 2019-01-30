@@ -12,7 +12,6 @@ import logging
 import codecs
 import json
 import redis
-import iaas.dev_info
 import time
 import random
 from single_dev import *
@@ -20,9 +19,11 @@ from iaas.dev_info import *
 from my_mqtt import *
 
 
+REDIS_HOST = "10.37.52.73"
+#REDIS_HOST = "127.0.0.1"
 class rtdata_channel:
     def __init__(self):
-        self.__conn = redis.Redis(host='127.0.0.1')
+        self.__conn = redis.Redis(host=REDIS_HOST)
         self.chan_sub = 'rtdata_channel'
         self.chan_pub = 'rtdata_channel'
 

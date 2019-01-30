@@ -16,6 +16,9 @@ from init_table import *
 from rtdata import *
 from dev_info import *
 from hisdata import *
+
+import http.server
+
 logging.getLogger().setLevel(logging.INFO)
 
 
@@ -38,7 +41,7 @@ def table_init():
 class rtdata_channel:
 
     def __init__(self):
-        self.__conn = redis.Redis(host='127.0.0.1')
+        self.__conn = redis.Redis(host=REDIS_HOST)
         self.chan_sub = 'rtdata_channel'
         self.chan_pub = 'rtdata_channel'
 
@@ -63,8 +66,16 @@ class MyEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
+from data_server import *
+
 if __name__ == "__main__":
     print('*********************\n   IAAS_DATA\n *********************\n')
+
+    serverAddress = ('', 5000)
+    server = http.server.HTTPServer(serverAddress, RequestHandler)
+    server.serve_forever()
+
+
     #定义日志输出格式
     logging.basicConfig(level=logging.INFO,
     format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
@@ -77,10 +88,11 @@ if __name__ == "__main__":
 
     table_init()
 
+    #MQ，数据队列
     rt_ch = rtdata_channel()
     rt_sub = rt_ch.subscribe()
-    while True:
-       
+
+    while True:    
         msg= rt_sub.parse_response()
         logging.info(msg)
 
@@ -94,7 +106,8 @@ if __name__ == "__main__":
             rtdb.mupdate_new_frame(int(id), data_dict)
             hisdb.insert_record(int(id), data_dict)
         else:
-            print("Wrong data, there is no ID")
+            logging.error("Wrong data, the msg has no ID" )
+            print("Wrong data, the msg has no ID")
 
 
     

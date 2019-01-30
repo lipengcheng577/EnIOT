@@ -5,10 +5,13 @@ import redis
 import logging
 from db_opt import *
 
+REDIS_HOST = "10.37.52.73"
+#REDIS_HOST = "127.0.0.1"
+
 #实时库入库、出库接口
 class rtdata(object):
     def __init__(self):
-        self.rds = redis.Redis(host='127.0.0.1', port=6379, db=0)
+        self.rds = redis.Redis(host=REDIS_HOST, port=6379, db=0)
         
 
     def mupdate_new_frame(self, dev_id, data):  

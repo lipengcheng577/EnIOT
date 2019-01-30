@@ -24,6 +24,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="data_server.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="hisdata.py">
       <SubType>Code</SubType>
     </Compile>

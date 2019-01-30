@@ -18,8 +18,8 @@ class my_mqtt():
         self.client.on_message = self.on_message
         self.client.on_disconnect = self.on_disconnect
 
-        HOST = "127.0.0.1"
-        self.client.connect(HOST, 1883, 60)
+        MQTT_HOST = "10.37.52.73"
+        self.client.connect(MQTT_HOST, 1883, 60)
         self.client.loop_start()
 
                 

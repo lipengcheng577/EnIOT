@@ -68,8 +68,8 @@ class hisdata(object):
             self._db.excute(sql)
 
 
-    '''查询历史数据'''
-    def query_data(self, start_time, end_time=0):
+    #查询历史数据, meas=all:查询全部，或表头（p，q，u，i等）
+    def query_data(self, dev_id, meas, start_time, end_time=0):
         if end_time == 0:
             return 1
         else:

@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "IaaS_data", "IaaS_data\IaaS_data.pyproj", "{3AE32E99-05FC-4C4D-9086-31D341C2D85A}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "fep_simu", "fep_simu\fep_simu.pyproj", "{0F9A8A6B-40BA-496F-9B02-1502E840D18D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{00DF4223-2808-487A-9C24-9F450D463DB1}"
 	ProjectSection(SolutionItems) = preProject
 		iaas\db_opt.py = iaas\db_opt.py
@@ -14,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "data_monitor", "data_monitor\data_monitor.pyproj", "{92682041-5006-405A-B7AE-BD099DD7E6EB}"
-EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "mqtt_client", "mqtt_client\mqtt_client.pyproj", "{EA5D84A1-44D5-4590-A0F0-CDD07BCA4360}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "fep_mqtt", "fep_mqtt\fep_mqtt.pyproj", "{09949367-8D4E-4C64-8330-0DDB8D8AEF63}"
 EndProject
@@ -29,14 +25,10 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3AE32E99-05FC-4C4D-9086-31D341C2D85A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3AE32E99-05FC-4C4D-9086-31D341C2D85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F9A8A6B-40BA-496F-9B02-1502E840D18D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F9A8A6B-40BA-496F-9B02-1502E840D18D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92682041-5006-405A-B7AE-BD099DD7E6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92682041-5006-405A-B7AE-BD099DD7E6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92682041-5006-405A-B7AE-BD099DD7E6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92682041-5006-405A-B7AE-BD099DD7E6EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA5D84A1-44D5-4590-A0F0-CDD07BCA4360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA5D84A1-44D5-4590-A0F0-CDD07BCA4360}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09949367-8D4E-4C64-8330-0DDB8D8AEF63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{09949367-8D4E-4C64-8330-0DDB8D8AEF63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB4028B2-2D6E-40AA-BA5E-E470F7DD4925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
